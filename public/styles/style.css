@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'photo4';
+    src: url('../fonts/a_old_photo_4.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'photo3';
+    src: url('../fonts/a_old_photo_3.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'photo2';
+    src: url('../fonts/a_old_photo_2.ttf') format('truetype');
+}
+
+* {
+    font-family: 'photo4';
+}
+
+body {
+    background-image: url("../images/weatherMain.png");
+    background-size: 100%;
+}

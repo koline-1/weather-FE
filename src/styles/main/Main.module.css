@@ -1,0 +1,47 @@
+.real_time_status {
+    position: relative;
+    text-align: center;
+}
+
+.real_time_status > img {
+    width: 5%;
+}
+
+.real_time_status > h1 {
+    color: white;
+    margin-top: 200px;
+}
+
+.real_time_status > p {
+    color: lightgrey;
+    font-family: photo3;
+}
+
+.container_main {
+    position: relative;
+    text-align: center;
+    color: white;
+    margin-top: 200px;
+    margin-inline: 200px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.container_main > div {
+    position: relative;
+}
+
+.container_main > div > img {
+    width: 250px;
+    height: 125px;
+}
+
+.container_main > div > a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 22px;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-decoration: none;
+}
