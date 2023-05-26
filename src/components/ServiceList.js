@@ -3,14 +3,14 @@ const { PropTypes } = require('prop-types');
 const ButtonLink = require('./ButtonLink').default;
 const styles = require('../styles/components/ServiceList.module.css').default;
 
-export default function ServiceList({ title, links }) {
+export default function ServiceList({ path, title, services, nxValue, nyValue }) {
 
     return (
         <div className={styles.white}>
             <h1>{title}</h1>
             <div>
-                {links.map((each) => {
-                    return <Link to={each.link}>{each.text}</Link>
+                {services.map((each) => {
+                    return <Link to={`/${path}/${each.serviceId}/${path === "mid" ? "location" : nxValue+"/"+nyValue}`}>{each.title}</Link>
                 })}
             </div>
             <ButtonLink to='/' text='뒤로' />
@@ -19,11 +19,14 @@ export default function ServiceList({ title, links }) {
 }
 
 ServiceList.propTypes = {
+    path: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    links: PropTypes.arrayOf(
+    services: PropTypes.arrayOf(
         PropTypes.shape({
-            link: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired
+            serviceId: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired
         })
-    )
+    ),
+    nxValue: PropTypes.string,
+    nyValue: PropTypes.string
 }

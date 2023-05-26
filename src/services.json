@@ -1,0 +1,69 @@
+{
+    "midTerm": {
+        "expectation": {
+            "title": "중기 예보 조회",
+            "locations": [
+                {
+                    "code":"105",
+                    "region": "강원도"
+                },
+                {
+                    "code":"108",
+                    "region": "전국"
+                },
+                {
+                    "code":"109",
+                    "region": "서울, 인천, 경기도"
+                },
+                {
+                    "code":"131",
+                    "region": "충청북도"
+                },
+                {
+                    "code":"133",
+                    "region": "대전, 세종, 충청남도"
+                },
+                {
+                    "code":"146",
+                    "region": "전라북도"
+                },
+                {
+                    "code":"156",
+                    "region": "광주, 전라남도"
+                },
+                {
+                    "code":"143",
+                    "region": "대구, 경상북도"
+                },
+                {
+                    "code":"159",
+                    "region": "부산, 울산, 경상남도"
+                },
+                {
+                    "code":"184",
+                    "region": "제주도"
+                }
+            ]
+        },
+        "land": {
+            "title": "중기 육상 예보"
+        },
+        "ocean": {
+            "title": "중기 해상 예보"
+        },
+        "temperature": {
+            "title": "중기 기온 조회"
+        }
+    },
+    "shortTerm": {
+        "expectation": {
+            "title": "단기 예보 조회"
+        },
+        "extra": {
+            "title": "초단기 예보"
+        },
+        "status": {
+            "title": "초단기 실황"
+        }
+    }
+}
