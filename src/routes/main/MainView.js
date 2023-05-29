@@ -38,7 +38,6 @@ export default function MainView () {
 
     const getData = async() => {
         const json = await(await fetch(`http://localhost:8080/mainView?nxValue=58&nyValue=125`)).json();
-        console.log(json);
         setData(json);
         setLoading(false);
     }

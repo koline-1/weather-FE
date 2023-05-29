@@ -1,31 +1,15 @@
-const { Link, useParams } = require('react-router-dom')
+const { Link } = require('react-router-dom');
 const ButtonLink = require('../../components/ButtonLink').default;
-const services = require('../../services.json');
 
 export default function DataPath() {
-    console.log(services.midTerm);
-
-    const midKeySet = Object.keys(services.midTerm);
-    const shortKeySet = Object.keys(services.shortTerm);
-
-    const { path } = useParams();
 
     return (
         <>
-            {path === "mid" ? (
-                <div>
-                    {midKeySet.map((key) => {
-                        return <Link to={`/data/mid/${key}`}>{services.midTerm[key].title}</Link>
-                    })}
-                </div>
-            ):(
-                <div>
-                    {shortKeySet.map((key) => {
-                        return <Link to={`/data/mid/${key}`}>{services.shortTerm[key].title}</Link>
-                    })}
-                </div>
-            )}
-            <ButtonLink to='/data' text={"뒤로"} />
+            <div>
+                <Link to="/data/mid" >중기 예보 저장 데이터 조회</Link>
+                <Link to="/data/short" >단기 예보 저장 데이터 조회</Link>
+            </div>
+            <ButtonLink to={"/"} text={"뒤로"} />
         </>
-    )
+    );
 }

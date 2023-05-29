@@ -47,13 +47,14 @@ export default function ShortTermLocation() {
             <div className={styles.white}>
                 <h1>위치 설정</h1>
                 <ul>
-                    {locations.map((target) => {
+                    {locations.map((location, index) => {
                         return (
-                            <li onClick={selectLocation} 
-                                className={position.nxValue === target.nx && position.nyValue === target.ny ? styles.active : ''} 
-                                nxvalue={target.nx} 
-                                nyvalue={target.ny}>
-                                {target.city} {target.county} {target.town}
+                            <li key={index}
+                                onClick={selectLocation} 
+                                className={position.nxValue === location.nx && position.nyValue === location.ny ? styles.active : ''} 
+                                nxvalue={location.nx} 
+                                nyvalue={location.ny}>
+                                {location.city} {location.county} {location.town}
                             </li>
                         );
                     })}

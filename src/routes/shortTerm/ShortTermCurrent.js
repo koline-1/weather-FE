@@ -1,6 +1,7 @@
 const { useEffect, useState } = require('react');
 const { useParams } = require('react-router-dom');
 const ButtonLink = require('../../components/ButtonLink').default;
+const services = require('../../services.json');
 
 
 export default function ShortTermCurrent() {
@@ -11,17 +12,7 @@ export default function ShortTermCurrent() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        let title = "";
-        switch(serviceId) {
-            case "expectation" : title="단기 예보 조회";
-                break;
-            case "extra" : title="초단기 예보 조회";
-                break;
-            case "status" : title="초단기 실황 조회";
-                break;
-            default: title="";
-        }
-        document.title=title;
+        document.title=services.shortTerm[serviceId].title;
 
         const getData = async() => {
             const response = await (await fetch(`http://localhost:8080/short-term/${serviceId}/current/${nxValue}/${nyValue}`)).json();
@@ -48,7 +39,7 @@ export default function ShortTermCurrent() {
             }),
         })).json()
         .catch((error) => console.log("error:", error));
-console.log(response);
+
         if (serviceId === "status") {
             if (response.baseDate !== "") {
                 alert("데이터를 성공적으로 저장하였습니다.");
