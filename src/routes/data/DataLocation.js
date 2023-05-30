@@ -26,17 +26,17 @@ export default function DataLocation () {
                     keySet.map((key, index) => {
                         const service =services.midTerm;
                         const region = service[serviceId].locations[key];
-                        return <div key={index}><Link to={`/data/mid/${serviceId}/location/${key}`} >{region}</Link></div>
+                        return <div key={index}><Link to={`/data/mid/${serviceId}/location/${key}?page=1`} >{region}</Link></div>
                         
                     })
                 ) : (
                     locations.map((location, index) => {
-                        return <div key={index}><Link to={`/data/short/${serviceId}/location/${location.nxValue}/${location.nyValue}`} >{location.region}</Link></div>
+                        return <div key={index}><Link to={`/data/short/${serviceId}/location/${location.nxValue}/${location.nyValue}?page=1`} >{location.region}</Link></div>
                     })
                 )}
             </div>
             <ButtonLink to={`/data/${path}`} text={"뒤로"} />
-            <ButtonLink to={`/data/${path}/${serviceId}`} text={"전체 조회"} />
+            <ButtonLink to={`/data/${path}/${serviceId}?page=1`} text={"전체 조회"} />
         </>
     );
 }

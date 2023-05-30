@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
+import styles from '../styles/components/ServiceList.module.css';
 
-const { Link } = require('react-router-dom');
-const { PropTypes } = require('prop-types');
-const ButtonLink = require('./ButtonLink').default;
-const styles = require('../styles/components/ServiceList.module.css').default;
-
-export default function ServiceList({ path, title, services, nxValue, nyValue }) {
+export default function ServiceList({ path, services, nxValue, nyValue }) {
     const [keySet, setKeySet] = useState([]);
 
     useEffect(() => {
@@ -14,7 +12,6 @@ export default function ServiceList({ path, title, services, nxValue, nyValue })
 
     return (
         <div className={styles.white}>
-            <h1>{title}</h1>
             <div>
                 {keySet.map((key, index) => {
                     return (
@@ -24,14 +21,12 @@ export default function ServiceList({ path, title, services, nxValue, nyValue })
                     );
                 })}
             </div>
-            <ButtonLink to='/' text='뒤로' />
         </div>
     )
 }
 
 ServiceList.propTypes = {
     path: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
     services: PropTypes.shape({
         title: PropTypes.string.isRequired,
         location: PropTypes.arrayOf(

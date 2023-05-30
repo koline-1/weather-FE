@@ -1,7 +1,10 @@
-const { useParams } = require('react-router-dom');
-const { useEffect } = require('react');
-const ServiceList = require('../../components/ServiceList').default;
-const services = require('../../services.json');
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import ButtonLink from '../../components/ButtonLink';
+import ServiceList from '../../components/ServiceList';
+import services from '../../services.json';
+import layout from '../../styles/layout/Layout.module.css'
+import Title from '../../components/Title';
 
 export default function ShortTermService() {
 
@@ -11,6 +14,16 @@ export default function ShortTermService() {
         document.title='기상청 단기 예보 목록';
     }, [])
 
-    return <ServiceList path="short" title="기상청 단기 예보 목록" services={services.shortTerm} nxValue={nxValue} nyValue={nyValue} />;
+    return (
+        <>
+            <Title title={'기상청 단기 예보 목록'} />
+            <div className={layout.sub_content}>
+                <ServiceList path="short" services={services.shortTerm} nxValue={nxValue} nyValue={nyValue} />
+            </div>
+            <div className={layout.sub_button}>
+                <ButtonLink to='/short/location' text='뒤로' />
+            </div>
+        </>
+    );
 
 }

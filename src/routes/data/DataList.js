@@ -12,8 +12,8 @@ export default function DataList() {
     const { path, serviceId } = useParams();
     
     const loc = useLocation();
-    const page = new URLSearchParams(loc.search).get("page");
-
+    const page = new URLSearchParams(loc.search).get("page") ?? "1";
+    
     useEffect(() => {
         const getData = async() => {
             const res = await (await fetch(`http://localhost:8080/${path}-term/${serviceId}/count`)).json();
@@ -31,7 +31,7 @@ export default function DataList() {
                 <div>
                     <h4>총 <strong>{count}</strong>개의 저장된 데이터가 있습니다.</h4>
                     <DataListView path={path} serviceId={serviceId} data={data} />
-                    <Pagination page={page} path={path} serviceId={serviceId} totalCount={count} />
+                    <Pagination page={page} path={path} serviceId={serviceId} totalCount={count} byLocation={false} />
                     <div>
                         <ButtonLink to={`/data/${path}`} text={"뒤로"} />
                         <ButtonLink to={`/data/${path}/${serviceId}/location`} text={"지역별 조회"} />

@@ -1,6 +1,8 @@
-const { useEffect, useState } = require('react');
-const ButtonLink = require('../../components/ButtonLink').default;
-const styles = require('../../styles/shortTerm/Location.module.css').default;
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import ButtonLink from '../../components/ButtonLink';
+import layout from '../../styles/layout/Layout.module.css';
+import Title from '../../components/Title';
 
 const locations = [
     {
@@ -21,47 +23,25 @@ const locations = [
 
 export default function ShortTermLocation() {
 
-    const [position, setPosition] = useState({nxValue: "", nyValue: ""})
-
     useEffect(() => {
         document.title='기상청 단기 예보 위치 설정';
     }, [])
 
-    const selectLocation = (event) => {
-        if (event.target.getAttribute("nxvalue") === position.nxValue && event.target.getAttribute("nyvalue") === position.nyValue) {
-            setPosition({nxValue: "", nyValue: ""});
-        } else {
-            setPosition({nxValue: event.target.getAttribute("nxvalue"), nyValue: event.target.getAttribute("nyvalue")})
-        }
-    }
-
-    const positionNullCheck = (event) => {
-        if (position.nxValue === "" || position.nyValue === "") {
-            event.preventDefault();
-            alert("위치를 선택하여 주세요.");
-        }
-    }
-
     return (
         <>
-            <div className={styles.white}>
-                <h1>위치 설정</h1>
-                <ul>
-                    {locations.map((location, index) => {
-                        return (
-                            <li key={index}
-                                onClick={selectLocation} 
-                                className={position.nxValue === location.nx && position.nyValue === location.ny ? styles.active : ''} 
-                                nxvalue={location.nx} 
-                                nyvalue={location.ny}>
-                                {location.city} {location.county} {location.town}
-                            </li>
-                        );
-                    })}
-                </ul>
+            <Title title={'위치 설정'} />
+            <div className={layout.sub_content}>
+                {locations.map((location, index) => {
+                    return (
+                        <div>
+                            <Link key={index} to={`/short/service/${location.nx}/${location.ny}`}>{location.city} {location.county} {location.town}</Link>
+                        </div>
+                    )
+                })}
             </div>
-            <ButtonLink to={`/short/service/${position.nxValue}/${position.nyValue}`} text="조회" onclick={positionNullCheck} />
-            <ButtonLink to="/" text="뒤로" />
+            <div className={layout.sub_button}>
+                <ButtonLink to="/" text="뒤로" />
+            </div>
         </>
     );
 }
