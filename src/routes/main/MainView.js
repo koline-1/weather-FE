@@ -38,7 +38,6 @@ export default function MainView () {
 
     const getData = async() => {
         const json = await(await fetch(`http://localhost:8080/mainView?nxValue=58&nyValue=125`)).json();
-        console.log(json);
         setData(json);
         setLoading(false);
     }
@@ -90,7 +89,7 @@ export default function MainView () {
                 </div>
                 <div>
                     <img src={squareMainTab} alt="squareMainTab" />
-                    <Link to="">추가 예정</Link>
+                    <Link to="/data">저장 데이터 조회</Link>
                 </div>
             </div>
         </>
