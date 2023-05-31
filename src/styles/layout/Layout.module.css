@@ -10,7 +10,9 @@
 }
 
 .sub_content {
-    overflow-y:scroll;
+    display: flex;
+    justify-content: center;
+    overflow:auto;
     margin-top: 55px;
     margin-bottom: 40px;
     width: 100%
@@ -28,8 +30,8 @@
     padding: 0.5rem 1rem;
     font-weight: 400;
     display: inline-block;
-    width: 100px;
+    width: 150px;
     border: none;
     border-radius: 15px;
-    background-color: rgb(214, 213, 213);
+    background-color: rgb(223, 223, 223);
 }

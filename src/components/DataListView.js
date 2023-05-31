@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
+import services from '../services.json';
+import styles from '../styles/components/DataListView.module.css';
 
-const services = require('../services.json');
-const { PropTypes } = require('prop-types');
-
-export default function DataListView ({ path, serviceId, data }) {
+export default function DataListView ({ path, serviceId, data, byLocation, page }) {
     const getMidTermRegion = (row) => {
         let key;
         if (serviceId === "expectation") {
@@ -29,21 +29,30 @@ export default function DataListView ({ path, serviceId, data }) {
     return (
         <>
             {data === null || data.length === 0 ? <h1>데이터가 없습니다.</h1> : (
-                <table>
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                {path === 'mid' ? '지역' : '예보지점'}
+                            </th>
+                            <th>
+                                날짜
+                            </th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {data.map((each, index) => {
                             return (
                                 <tr key={index}>
-                                    <th>id</th>
                                     <td>{each.id}</td>
                                     {path === "mid" ? (<>
-                                        <th>지역</th>
-                                        <td><Link to={`/data/mid/${serviceId}/${each.id}`}>{getMidTermRegion(each)}</Link></td>
+                                        <td><Link to={`/data/mid/${serviceId}/${each.id}?byLocation=${byLocation}&page=${page}`}>{getMidTermRegion(each)}</Link></td>
                                     </>) : (<>
-                                        <th>예보지점</th>
-                                        <td><Link to={`/data/short/${serviceId}/${each.id}`}>{getShortTermRegion(each)}</Link></td>
+                                        <td><Link to={`/data/short/${serviceId}/${each.id}?byLocation=${byLocation}&page=${page}`}>{getShortTermRegion(each)}</Link></td>
                                     </>)}
-                                    <th>날짜</th>
                                     <td>{each.date}</td>
                                 </tr>
                             )
@@ -70,5 +79,7 @@ DataListView.propTypes = {
         })
     ),
     serviceId: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired
+    path: PropTypes.string.isRequired,
+    byLocation: PropTypes.bool.isRequired,
+    page: PropTypes.string
 }

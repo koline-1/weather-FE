@@ -24,12 +24,12 @@ const locations = [
 export default function ShortTermLocation() {
 
     useEffect(() => {
-        document.title='기상청 단기 예보 위치 설정';
+        document.title='단기 예보 위치 설정';
     }, [])
 
     return (
         <>
-            <Title title={'위치 설정'} />
+            <Title title={'단기 예보 위치 설정'} />
             <div className={layout.sub_content}>
                 {locations.map((location, index) => {
                     return (
