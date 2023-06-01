@@ -216,18 +216,6 @@
     "shortTerm": {
         "expectation": {
             "title": "단기 예보 조회",
-            "locations":[
-                {
-                    "region": "부산",
-                    "nxValue": "55",
-                    "nyValue": "127"
-                },
-                {
-                    "region": "수원",
-                    "nxValue": "61",
-                    "nyValue": "120"
-                }
-            ],
             "data": {
                 "id": "id",
                 "date": "등록일",
@@ -256,18 +244,6 @@
         },
         "extra": {
             "title": "초단기 예보",
-            "locations":[
-                {
-                    "region": "부산",
-                    "nxValue": "55",
-                    "nyValue": "127"
-                },
-                {
-                    "region": "수원",
-                    "nxValue": "61",
-                    "nyValue": "120"
-                }
-            ],
             "data": {
                 "id": "id",
                 "date": "등록일",
@@ -292,18 +268,6 @@
         },
         "status": {
             "title": "초단기 실황",
-            "locations":[
-                {
-                    "region": "부산",
-                    "nxValue": "55",
-                    "nyValue": "127"
-                },
-                {
-                    "region": "수원",
-                    "nxValue": "61",
-                    "nyValue": "120"
-                }
-            ],
             "data": {
                 "id": "id",
                 "date": "등록일",

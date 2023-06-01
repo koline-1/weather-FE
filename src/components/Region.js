@@ -4,10 +4,11 @@ const { PropTypes } = require('prop-types');
 export default function Region({ path, serviceId, code }) {
     const data = services[path];
     const locations = data[serviceId].locations;
+    const keys = Object.keys(locations);
     let region = "";
-    [].forEach.call(locations, (location) => {
-        if (location.code === code) {
-            region = location.region;
+    [].forEach.call(keys, (key) => {
+        if (key === code) {
+            region = locations[key];
             return false;
         }
     })

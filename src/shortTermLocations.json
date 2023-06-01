@@ -1,0 +1,57 @@
+[
+    {
+        "region": "서울",
+        "nxValue": "60",
+        "nyValue": "127"
+    },
+    {
+        "region": "경기도",
+        "nxValue": "60",
+        "nyValue": "120"
+    },
+    {
+        "region": "부산",
+        "nxValue": "55",
+        "nyValue": "127"
+    },
+    {
+        "region": "강원도",
+        "nxValue": "73",
+        "nyValue": "134"
+    },
+    {
+        "region": "인천",
+        "nxValue": "55",
+        "nyValue": "124"
+    },
+    {
+        "region": "대전",
+        "nxValue": "67",
+        "nyValue": "100"
+    },
+    {
+        "region": "대구",
+        "nxValue": "89",
+        "nyValue": "90"
+    },
+    {
+        "region": "광주",
+        "nxValue": "58",
+        "nyValue": "74"
+    },
+    {
+        "region": "제주",
+        "nxValue": "52",
+        "nyValue": "38"
+    },
+    {
+        "region": "제주",
+        "nxValue": "52",
+        "nyValue": "38"
+    },
+    {
+        "region": "수원",
+        "nxValue": "61",
+        "nyValue": "120"
+    }
+]

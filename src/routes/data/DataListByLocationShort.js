@@ -16,11 +16,8 @@ export default function DataListByLocation() {
     
     const loc = useLocation();
     const page = new URLSearchParams(loc.search).get("page") ?? "1";
-
-    const title = `${services[path+'Term'][serviceId].title} 저장 데이터 지역별 조회`;
     
     useEffect(() => {
-        document.title = title;
         const getData = async() => {
             const res = await (await fetch(`http://localhost:8080/${path}-term/${serviceId}/count?nxValue=${nxValue}&nyValue=${nyValue}`)).json();
             setCount(res.count);
@@ -29,11 +26,11 @@ export default function DataListByLocation() {
             setLoading(false);
         }
         getData();
-    }, [path, serviceId, nxValue, nyValue, page, title])
+    }, [path, serviceId, nxValue, nyValue, page])
        
     return (
         <>
-            <Title title={title} />
+            <Title title={`${services[path+'Term'][serviceId].title} 저장 데이터 지역별 조회`} />
             { loading ? <></> : (
                 <div className={layout.sub_content}>
                     <h4 className={styles.count}>총 <strong>{count}</strong>개의 저장된 데이터가 있습니다.</h4>

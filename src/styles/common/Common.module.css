@@ -3,6 +3,11 @@
     height: 600px;
 }
 
+.tabs_vertical > div {
+    display: flex;
+}
+
+.tabs_vertical a,
 .tabs a {
     display: block;
     width: 250px;

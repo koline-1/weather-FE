@@ -1,33 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ButtonLink from '../../components/ButtonLink';
 import services from '../../services.json';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from '../../components/Title';
+import LocationList from '../../components/LocationList';
 
 export default function MidTermLocation() {
-    const [keySet, setKeySet] = useState([]);
     const { serviceId } = useParams();
-    const title = `${services.midTerm[serviceId].title} 위치 설정`;
-    
-    useEffect(() => {
-        document.title=title;
-      
-        const keys = Object.keys(services.midTerm[serviceId].locations);
-        setKeySet(keys);
-    }, [serviceId, title]);
-
     return (
         <>
-            <Title title={title} />
+            <Title title={`${services.midTerm[serviceId].title} 위치 설정`} />
             <div className={layout.sub_content}>
-                {keySet.map((key, index) => {
-                    return (
-                        <div key={index}>
-                            <Link to={`/mid/${serviceId}/${key}`} >{services.midTerm[serviceId].locations[key]}</Link>
-                        </div>
-                    )
-                })}
+                <LocationList path='mid' serviceId={serviceId} viaData={false} />
             </div>
             <div className={layout.sub_button} >
                 <ButtonLink to='/mid/service' text='뒤로' />

@@ -1,42 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import styles from '../styles/components/ServiceList.module.css';
+import styles from '../styles/common/Common.module.css';
+import services from '../services.json';
 
-export default function ServiceList({ path, services, nxValue, nyValue }) {
-    const [keySet, setKeySet] = useState([]);
+export default function ServiceList({ path, viaData }) {
 
-    useEffect(() => {
-        setKeySet(Object.keys(services));
-    }, [services])
+    const keys = Object.keys(services[path+"Term"]);
 
     return (
-        <div className={styles.white}>
-            <div>
-                {keySet.map((key, index) => {
-                    return (
-                        <div key={index}>
-                            <Link to={`/${path}/${key}/${path === "mid" ? "location" : nxValue+"/"+nyValue}`}>{services[key].title}</Link>
-                        </div>
-                    );
-                })}
-            </div>
+        <div className={styles.tabs}>
+            {keys.map((key, index) => {
+                return (
+                    <div key={index}>
+                        <Link to={(viaData ? '/data' : '')+(`/${path}/${key}`) + (viaData ? '?page=1' : '/location')}>{services[path+"Term"][key].title}</Link>
+                    </div>
+                );
+            })}
         </div>
     )
 }
 
 ServiceList.propTypes = {
     path: PropTypes.string.isRequired,
-    services: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        location: PropTypes.arrayOf(
-            PropTypes.shape({
-                code: PropTypes.string.isRequired,
-                region: PropTypes.string.isRequired
-            })
-        )
-    }),
-    locationCode: PropTypes.string,
-    nxValue: PropTypes.string,
-    nyValue: PropTypes.string
+    viaData: PropTypes.bool.isRequired
 }

@@ -4,6 +4,7 @@ import layout from '../styles/layout/Layout.module.css';
 import styles from '../styles/components/Title.module.css'
 
 export default function Title({ title }) {
+    document.title=title;
     return (
         <>
             <div className={styles.home_container}>

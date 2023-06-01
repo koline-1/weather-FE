@@ -12,13 +12,8 @@ export default function ShortTermCurrent() {
     const [data, setData] = useState();
     const [keySet, setKeySet] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [title, setTitle] = useState("");
 
     useEffect(() => {
-        const title = services.shortTerm[serviceId].title;
-        setTitle(title);
-        document.title = title;
-
         const getData = async() => {
             const response = await (await fetch(`http://localhost:8080/short-term/${serviceId}/current/${nxValue}/${nyValue}`)).json();
             setData(response);
@@ -29,7 +24,6 @@ export default function ShortTermCurrent() {
             }
             setLoading(false);
         }
-
         getData()
     }, [serviceId, nxValue, nyValue])
 
@@ -67,25 +61,25 @@ export default function ShortTermCurrent() {
     
     return (
         <>
-            <Title title={title} />
+            <Title title={services.shortTerm[serviceId].title} />
             <div className={layout.sub_content}>
                 {loading ? <></> : serviceId === "status" ?
                     <ul>
-                        {keySet.map((key) => {
+                        {keySet.map((key, index) => {
                             if (key === "id" || key === "date") {
-                                return <></>;
+                                return "";
                             }
-                            return <li key={`${key}`}>{key+ ": "+ data[key]}</li>
+                            return <li key={index}>{key+ ": "+ data[key]}</li>
                         })}
                     </ul>
                     :
                     <div>
                         {data.map((each, index) => {
                             return <div key={index}>
-                                <ul key={index}>
+                                <ul>
                                     {keySet.map((key) => {
                                         if (key === "id" || key === "date") {
-                                            return <></>;
+                                            return "";
                                         }
                                         return <li key={`${index}_${key}`}>{key+ ": "+ each[key]}</li>
                                     })}
@@ -96,8 +90,9 @@ export default function ShortTermCurrent() {
                 }
             </div>
             <div className={layout.sub_button}>
-                <ButtonLink to={`/short/service/${nxValue}/${nyValue}`} text="뒤로" />
+                <ButtonLink to={`/short/${serviceId}/location/`} text="뒤로" />
                 <button onClick={saveData}>저장</button>
+                <ButtonLink to={`/data/short/${serviceId}/location/${nxValue}/${nyValue}?page=1`} text="저장데이터 조회" />
             </div>
         </>
     );
