@@ -1,11 +1,12 @@
-const { useEffect, useState } =  require('react');
-const { Link } = require('react-router-dom');
-const disconnected = require('../../images/main/disconnected.png');
-const sunny = require('../../images/main/sunny.png');
-const snowy = require('../../images/main/snowy.png');
-const rainy = require('../../images/main/rainy.png');
-const squareMainTab = require('../../images/squareMainTab.png');
-const styles = require('../../styles/main/Main.module.css').default;
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import disconnected from '../../images/main/disconnected.png';
+import sunny from '../../images/main/sunny.png';
+import snowy from '../../images/main/snowy.png';
+import rainy from '../../images/main/rainy.png';
+import squareMainTab from '../../images/squareMainTab.png';
+import styles from '../../styles/main/Main.module.css';
+import apiInfo from '../../apiInfo.json';
 
 // @TODO: 추후에 DB에 기상청 단기예보 excel 데이터 업로드 후 위치기반 서비스 추가
 // @TODO: 초단기 실황 > 초단기 예보로 서비스 변경
@@ -37,7 +38,23 @@ export default function MainView () {
     // }
 
     const getData = async() => {
-        const json = await(await fetch(`http://localhost:8080/mainView?nxValue=58&nyValue=125`)).json();
+        const date = new Date();
+        const min = date.getMinutes();
+
+        if (min < 40) {
+            date.setHours(date.getHours() - 1);
+        }
+
+        const month = date.getMonth()+1;
+        const day = date.getDate();
+        const hour = date.getHours();
+
+        const baseDate = `${date.getFullYear()}${month < 10 ? '0'+month : month}${day < 10 ? '0'+day : day}`;
+        const baseTime = `${hour < 10 ? '0'+hour : hour}${min < 10 ? '0'+min : min}`;
+
+        const url = `${apiInfo.url}&nx=58&ny=125&base_date=${baseDate}&base_time=${baseTime}`;
+        const json = await(await fetch(url)).json();
+        console.log(json);
         setData(json);
         setLoading(false);
     }
@@ -46,7 +63,19 @@ export default function MainView () {
     //     getPosition();
     // }, [])
 
-    const realTimeStatus = () => {switch(data.rainType){
+    const getValue = (target) => {
+        const items = data.response.body.items.item;
+        let result;
+        [].forEach.call(items, (item) => {
+            if (item.category === target) {
+                result = item.obsrValue;
+                return false;
+            }
+        })
+        return result;
+    }
+    
+    const realTimeStatus = () => {switch(getValue('PTY')){
         case "0": return (<>
             <img src={sunny} alt="sunny"/>
             <p>맑음</p>
@@ -74,14 +103,14 @@ export default function MainView () {
                     <p>날씨정보를 찾을 수 없습니다.</p>
                 </> : <>
                     {realTimeStatus()}
-                    <p>{data.temperature}℃</p>
+                    <p>{getValue('T1H')}℃</p>
                 </>}
             </div>
 
             <div className={styles.container_main}>
                 <div>
                     <img src={squareMainTab} alt="squareMainTab" />
-                    <Link to="/short/location">기상청 단기 예보</Link>
+                    <Link to="/short/service">기상청 단기 예보</Link>
                 </div>
                 <div>
                     <img src={squareMainTab} alt="squareMainTab" />

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import services from '../services.json';
+import shortTermLocations from '../shortTermLocations.json';
 import styles from '../styles/components/DataListView.module.css';
 
 export default function DataListView ({ path, serviceId, data, byLocation, page }) {
@@ -15,9 +16,8 @@ export default function DataListView ({ path, serviceId, data, byLocation, page 
     }
 
     const getShortTermRegion = (row) => {
-        const locations = services.shortTerm[serviceId].locations;
         let region;
-        [].forEach.call(locations, (location) => {
+        [].forEach.call(shortTermLocations, (location) => {
             if (location.nxValue === row.nxValue && location.nyValue === row.nyValue) {
                 region = location.region;
                 return false;

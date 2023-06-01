@@ -16,11 +16,8 @@ export default function DataList() {
     
     const loc = useLocation();
     const page = new URLSearchParams(loc.search).get("page") ?? "1";
-
-    const title = `${services[path+"Term"][serviceId].title} 저장 데이터`;
     
     useEffect(() => {
-        document.title = title;
         const getData = async() => {
             const res = await (await fetch(`http://localhost:8080/${path}-term/${serviceId}/count`)).json();
             setCount(res.count);
@@ -29,11 +26,11 @@ export default function DataList() {
             setLoading(false);
         }
         getData();
-    }, [serviceId, path, page, title])
+    }, [serviceId, path, page])
 
     return (
         <>
-            <Title title={title} />
+            <Title title={`${services[path+"Term"][serviceId].title} 저장 데이터`} />
             <div className={layout.sub_content}>
                 {loading ? <></> : (
                     <div>
@@ -46,7 +43,7 @@ export default function DataList() {
             <div className={layout.sub_button}>
                 <ButtonLink to={`/data/${path}`} text={"뒤로"} />
                 <ButtonLink to={`/data/${path}/${serviceId}/location`} text={"지역별 조회"} />
-                <ButtonLink to={path === 'mid' ? `/mid/${serviceId}/location` : `/short/location`} text={"실시간 조회"} />
+                <ButtonLink to={`/${path}/${serviceId}/location`} text={"실시간 조회"} />
             </div>
         </>
     );

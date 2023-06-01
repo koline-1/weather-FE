@@ -11,10 +11,8 @@ export default function MidTermCurrent () {
     const [keySet, setKeySet] = useState([]);
     const [loading, setLoading] = useState(true);
     const { serviceId, locationCode } = useParams();
-    const title = services.midTerm[serviceId].title
 
     useEffect(() => {
-        document.title= title;
         const getData = async() => {
             const response = await(await fetch(`http://localhost:8080/mid-term/${serviceId}/current/${locationCode}`)).json();
             setData(response);
@@ -22,7 +20,7 @@ export default function MidTermCurrent () {
             setLoading(false);
         }
         getData();
-    }, [locationCode, serviceId, title]);
+    }, [locationCode, serviceId]);
 
     const saveData = async() => {
         const response = await (await fetch(`http://localhost:8080/mid-term/${serviceId}/current`, {
@@ -46,24 +44,24 @@ export default function MidTermCurrent () {
 
     return (
         <>
-            <Title title={title} />
+            <Title title={services.midTerm[serviceId].title} />
             <div className={layout.sub_content}>
                 {loading ? <></> : (
                     <ul>
-                        {keySet.map((key) => {
+                        {keySet.map((key, index) => {
                             if (key === "id" || key === "date") {
                                 return "";
                             }
 
                             if (key === "stnId"){
-                                return <Region path="midTerm" serviceId={serviceId} code={data.stnId} />
+                                return <Region key={index} path="midTerm" serviceId={serviceId} code={data.stnId} />
                             }
 
                             if (key === "regId") {
-                                return <Region path="midTerm" serviceId={serviceId} code={data.regId} />
+                                return <Region key={index} path="midTerm" serviceId={serviceId} code={data.regId} />
                             }
 
-                            return <li>{key+ ": "+ data[key]}</li>
+                            return <li key={index}>{key+ ": "+ data[key]}</li>
                         })}
                     </ul>
                 )}
@@ -71,6 +69,7 @@ export default function MidTermCurrent () {
             <div className={layout.sub_button}>
                 <ButtonLink to={"/mid/"+serviceId+"/location"} text="뒤로" />
                 <button onClick={saveData}>저장</button>
+                <ButtonLink to={`/data/mid/${serviceId}/location/${locationCode}?page=1`} text="저장데이터 조회" />
             </div>
         </>
     );

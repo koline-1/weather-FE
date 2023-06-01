@@ -37,8 +37,8 @@ function App() {
           <Route path='/mid/:serviceId/location' element={<MidTermLocation />} />
           <Route path='/mid/:serviceId/:locationCode' element={<MidTermCurrent />} />
           {/* 단기예보 */}
-          <Route path='/short/location' element={<ShortTermLocation />} />
-          <Route path='/short/service/:nxValue/:nyValue' element={<ShortTermService />} />
+          <Route path='/short/service' element={<ShortTermService />} />
+          <Route path='/short/:serviceId/location' element={<ShortTermLocation />} />
           <Route path='/short/:serviceId/:nxValue/:nyValue' element={<ShortTermCurrent />} />
           {/* 저장데이터조회 */}
           <Route path='/data' element={<DataPath />} />

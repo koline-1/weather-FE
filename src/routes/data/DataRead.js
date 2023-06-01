@@ -16,21 +16,18 @@ export default function DataRead() {
     const page = new URLSearchParams(loc.search).get("page") ?? "1";
     const byLocation = JSON.parse(new URLSearchParams(loc.search).get("byLocation")) ?? false;
 
-    const title = `${services[path+"Term"][serviceId].title} 저장 데이터 조회`;
-
     useEffect(() => {
-        document.title = title
         const getData = async() => {
             const resonse = await (await fetch(`http://localhost:8080/${path}-term/${serviceId}/${dataId}`)).json();
             setData(resonse);
             setLoading(false);
         }
         getData();
-    }, [path, serviceId, dataId, title])
+    }, [path, serviceId, dataId])
 
     return (
         <>
-            <Title title={title} />
+            <Title title={`${services[path+"Term"][serviceId].title} 저장 데이터 조회`} />
             <div className={layout.sub_content}>
                 {loading ? <></> : <DataView path={path} data={data} serviceId={serviceId} />}
             </div>
