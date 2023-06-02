@@ -21,15 +21,10 @@ const links = [
 ]
 
 export default function MidTermService() {
-    return (
-        <>
-            <Title title='중기 예보 목록' />
-            <div className={layout.sub_content}>
-                <ServiceList path="mid" isViaData={false} />
-            </div>
-            <div className={layout.sub_button}>
-                <ButtonLink to='/' text='뒤로' />
-            </div>
-        </>
-    )
+
+    useEffect(() => {
+        document.title='기상청 중기 예보 목록';
+    }, [])
+
+    return <ServiceList title="기상청 중기 예보 목록" links={links} />
 }

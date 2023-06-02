@@ -44,9 +44,20 @@ export default function ShortTermLocation() {
 
     return (
         <>
-            <Title title={'단기 예보 위치 설정'} />
-            <div className={layout.sub_content}>
-                <LocationList path='short' serviceId={serviceId} isViaData={false} />
+            <div className={styles.white}>
+                <h1>위치 설정</h1>
+                <ul>
+                    {locations.map((target) => {
+                        return (
+                            <li onClick={selectLocation} 
+                                className={position.nxValue === target.nx && position.nyValue === target.ny ? styles.active : ''} 
+                                nxvalue={target.nx} 
+                                nyvalue={target.ny}>
+                                {target.city} {target.county} {target.town}
+                            </li>
+                        );
+                    })}
+                </ul>
             </div>
             <ButtonLink to={`/short/service/${position.nxValue}/${position.nyValue}`} text="조회" onclick={positionNullCheck} />
             <ButtonLink to="/" text="뒤로" />
