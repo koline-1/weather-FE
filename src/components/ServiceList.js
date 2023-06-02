@@ -3,22 +3,27 @@ const { PropTypes } = require('prop-types');
 const ButtonLink = require('./ButtonLink').default;
 const styles = require('../styles/components/ServiceList.module.css').default;
 
-export default function ServiceList({ path, isViaData }) {
+export default function ServiceList({ title, links }) {
 
     return (
-        <div className={styles.tabs}>
-            {keys.map((key, index) => {
-                return (
-                    <div key={index}>
-                        <Link to={(isViaData ? '/data' : '')+(`/${path}/${key}`) + (isViaData ? '?page=1' : '/location')}>{services[path+"Term"][key].title}</Link>
-                    </div>
-                );
-            })}
+        <div className={styles.white}>
+            <h1>{title}</h1>
+            <div>
+                {links.map((each) => {
+                    return <Link to={each.link}>{each.text}</Link>
+                })}
+            </div>
+            <ButtonLink to='/' text='뒤로' />
         </div>
     )
 }
 
 ServiceList.propTypes = {
-    path: PropTypes.string.isRequired,
-    isViaData: PropTypes.bool.isRequired
+    title: PropTypes.string.isRequired,
+    links: PropTypes.arrayOf(
+        PropTypes.shape({
+            link: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        })
+    )
 }
