@@ -45,3 +45,28 @@
     color: white;
     text-decoration: none;
 }
+
+.select_box {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    text-align: center;
+
+    font-family: 'photo3';
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.5;
+  
+    color: #ffffff;
+    background-color: #ffffff0e;
+  
+    padding: 0.6em 0.6em 0.6em 0.6em;
+  
+    border: 1px solid #aaa;
+    border-radius: 0.5em;
+}
+
+.select_box > option {
+    color:black;
+}

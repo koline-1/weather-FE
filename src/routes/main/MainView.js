@@ -7,37 +7,20 @@ import rainy from '../../images/main/rainy.png';
 import squareMainTab from '../../images/squareMainTab.png';
 import styles from '../../styles/main/Main.module.css';
 import apiInfo from '../../apiInfo.json';
+import shortTermLocations from '../../shortTermLocations.json';
 
-// @TODO: 추후에 DB에 기상청 단기예보 excel 데이터 업로드 후 위치기반 서비스 추가
 // @TODO: 초단기 실황 > 초단기 예보로 서비스 변경
 export default function MainView () {
 
     useEffect(() => {
         document.title='기상청 중·단기 예보 조회 서비스';
-        getData();
+        getData(60, 127);
     }, [])
 
-    // const [position, setPosition] = useState({lat: "", lon: ""});
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState();
 
-    // const onGeoOkay = (position) => {
-    //     console.log(position)
-    //     const lat = Math.floor(position.coords.latitude);
-    //     const lon = Math.floor(position.coords.longitude);
-    //     setPosition({lat: lat, lon: lon});
-    //     setLoading(false);
-    // }
-      
-    // const onGeoError = () => {
-    //     alert("I can't find you. No weather for you.");
-    // }
-    
-    // const getPosition = () => {
-    //     navigator.geolocation.getCurrentPosition(onGeoOkay, onGeoError);
-    // }
-
-    const getData = async() => {
+    const getData = async(nx, ny) => {
         const date = new Date();
         const min = date.getMinutes();
 
@@ -52,16 +35,11 @@ export default function MainView () {
         const baseDate = `${date.getFullYear()}${month < 10 ? '0'+month : month}${day < 10 ? '0'+day : day}`;
         const baseTime = `${hour < 10 ? '0'+hour : hour}${min < 10 ? '0'+min : min}`;
 
-        const url = `${apiInfo.url}&nx=58&ny=125&base_date=${baseDate}&base_time=${baseTime}`;
+        const url = `${apiInfo.url}&nx=${nx}&ny=${ny}&base_date=${baseDate}&base_time=${baseTime}`;
         const json = await(await fetch(url)).json();
-        console.log(json);
         setData(json);
         setLoading(false);
     }
-
-    // useEffect(() => {
-    //     getPosition();
-    // }, [])
 
     const getValue = (target) => {
         const items = data.response.body.items.item;
@@ -76,28 +54,57 @@ export default function MainView () {
     }
     
     const realTimeStatus = () => {switch(getValue('PTY')){
-        case "0": return (<>
-            <img src={sunny} alt="sunny"/>
-            <p>맑음</p>
-        </>)
-        case "3": case "7": return (<>
-            <img src={snowy} alt="snowy"/>
-            <p>눈</p>
-        </>)
-        case "1": case "2": case "5": case "6": return (<>
-            <img src={rainy} alt="rainy"/>
-            <p>비</p>
-        </>)
-        default: return (<>
-            <img src={disconnected} alt="disconnected"/>
-            <p>날씨정보를 찾을 수 없습니다.</p>
-        </>)
+        case "0": return (
+            <>
+                <img src={sunny} alt="sunny"/>
+                <p>맑음</p>
+            </>
+        )
+        case "3": case "7": return (
+            <>
+                <img src={snowy} alt="snowy"/>
+                <p>눈</p>
+            </>
+        )
+        case "1": case "2": case "5": case "6": return (
+            <>
+                <img src={rainy} alt="rainy"/>
+                <p>비</p>
+            </>
+        )
+        default: return (
+            <>
+                <img src={disconnected} alt="disconnected"/>
+                <p>날씨정보를 찾을 수 없습니다.</p>
+            </>
+        )
     }};
 
     return (
         <>
             <div className={styles.real_time_status}>
                 <h1>기상 실황</h1>
+                <h4>
+                    <select
+                        onChange={(e) => {
+                            const target = e.target.selectedOptions[0];
+                            getData(target.getAttribute("nxvalue"), target.getAttribute("nyvalue"));
+                        }}
+                        className={styles.select_box}
+                    >
+                        {shortTermLocations.map((loc, index) => {
+                            return (
+                                <option
+                                    key={index}
+                                    nxvalue={loc.nxValue}
+                                    nyvalue={loc.nyValue}
+                                >
+                                    {loc.region}
+                                </option>
+                            )
+                        })}
+                    </select>
+                </h4>
                 {loading ? <>
                     <img src={disconnected} alt="disconnected"/>
                     <p>날씨정보를 찾을 수 없습니다.</p>
