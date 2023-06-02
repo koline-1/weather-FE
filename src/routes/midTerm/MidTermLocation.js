@@ -12,7 +12,7 @@ export default function MidTermLocation() {
         <>
             <Title title={`${services.midTerm[serviceId].title} 위치 설정`} />
             <div className={layout.sub_content}>
-                <LocationList path='mid' serviceId={serviceId} viaData={false} />
+                <LocationList path='mid' serviceId={serviceId} isViaData={false} />
             </div>
             <div className={layout.sub_button} >
                 <ButtonLink to='/mid/service' text='뒤로' />

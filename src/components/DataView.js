@@ -1,7 +1,8 @@
-const services = require('../services.json');
-const { PropTypes } = require('prop-types');
+import services from '../services.json';
+import { PropTypes } from 'prop-types';
+import styles from '../styles/components/DataView.module.css';
 
-export default function DataView ({ path, serviceId, data }) {
+export default function DataView ({ path, serviceId, data, isViaData }) {
     const service = services[path+"Term"];
     const datalist = service[serviceId].data
     const keys = Object.keys(datalist);
@@ -9,14 +10,18 @@ export default function DataView ({ path, serviceId, data }) {
     return (
         <>
             {data === null || data.length === 0 ? <h1>데이터가 없습니다.</h1> : (
-                <table width={1700}>
+                <table className={styles.table}>
                     <tbody>
                         {keys.map((key, index) => {
                             return (
-                                <tr key={index}>
-                                    <th width="150">{datalist[key]}</th>
-                                    <td>{data[key]}</td>
-                                </tr>
+                                <>
+                                    {!isViaData && (key === "id" || key === "date") ? <></> : (
+                                        <tr key={index}>
+                                            <th>{datalist[key]}</th>
+                                            <td>{data[key]}</td>
+                                        </tr>
+                                    )}
+                                </>
                             )
                         })}
                     </tbody>
@@ -29,8 +34,9 @@ export default function DataView ({ path, serviceId, data }) {
 DataView.propTypes = {
     data: PropTypes.shape({
             id: PropTypes.number.isRequired,
-            date: PropTypes.string.isRequired
+            date: PropTypes.string
         }),
     serviceId: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired
+    path: PropTypes.string.isRequired,
+    isViaData: PropTypes.bool.isRequired
 }

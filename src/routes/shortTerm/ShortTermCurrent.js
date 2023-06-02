@@ -4,6 +4,7 @@ import ButtonLink from '../../components/ButtonLink';
 import services from '../../services.json';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from '../../components/Title';
+import DataView from '../../components/DataView';
 
 
 export default function ShortTermCurrent() {
@@ -64,27 +65,11 @@ export default function ShortTermCurrent() {
             <Title title={services.shortTerm[serviceId].title} />
             <div className={layout.sub_content}>
                 {loading ? <></> : serviceId === "status" ?
-                    <ul>
-                        {keySet.map((key, index) => {
-                            if (key === "id" || key === "date") {
-                                return "";
-                            }
-                            return <li key={index}>{key+ ": "+ data[key]}</li>
-                        })}
-                    </ul>
+                    <DataView path='short' serviceId={serviceId} data={data} isViaData={false} />
                     :
                     <div>
                         {data.map((each, index) => {
-                            return <div key={index}>
-                                <ul>
-                                    {keySet.map((key) => {
-                                        if (key === "id" || key === "date") {
-                                            return "";
-                                        }
-                                        return <li key={`${index}_${key}`}>{key+ ": "+ each[key]}</li>
-                                    })}
-                                </ul>
-                            </div>
+                            return <DataView key={index} path='short' serviceId={serviceId} data={each} isViaData={false} />
                         })}
                     </div>
                 }

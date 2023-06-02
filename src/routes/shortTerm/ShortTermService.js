@@ -8,7 +8,7 @@ export default function ShortTermService() {
         <>
             <Title title={'단기 예보 목록'} />
             <div className={layout.sub_content}>
-                <ServiceList path="short" viaData={false} />
+                <ServiceList path="short" isViaData={false} />
             </div>
             <div className={layout.sub_button}>
                 <ButtonLink to='/' text='뒤로' />

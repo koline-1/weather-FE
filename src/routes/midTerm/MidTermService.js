@@ -8,7 +8,7 @@ export default function MidTermService() {
         <>
             <Title title='중기 예보 목록' />
             <div className={layout.sub_content}>
-                <ServiceList path="mid" viaData={false} />
+                <ServiceList path="mid" isViaData={false} />
             </div>
             <div className={layout.sub_button}>
                 <ButtonLink to='/' text='뒤로' />

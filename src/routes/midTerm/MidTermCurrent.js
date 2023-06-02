@@ -5,6 +5,7 @@ import services from '../../services.json';
 import Region from '../../components/Region';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from "../../components/Title";
+import DataView from "../../components/DataView";
 
 export default function MidTermCurrent () {
     const [data, setData] = useState();
@@ -47,23 +48,7 @@ export default function MidTermCurrent () {
             <Title title={services.midTerm[serviceId].title} />
             <div className={layout.sub_content}>
                 {loading ? <></> : (
-                    <ul>
-                        {keySet.map((key, index) => {
-                            if (key === "id" || key === "date") {
-                                return "";
-                            }
-
-                            if (key === "stnId"){
-                                return <Region key={index} path="midTerm" serviceId={serviceId} code={data.stnId} />
-                            }
-
-                            if (key === "regId") {
-                                return <Region key={index} path="midTerm" serviceId={serviceId} code={data.regId} />
-                            }
-
-                            return <li key={index}>{key+ ": "+ data[key]}</li>
-                        })}
-                    </ul>
+                    <DataView path='mid' serviceId={serviceId} data={data} isViaData={false} />
                 )}
             </div>
             <div className={layout.sub_button}>

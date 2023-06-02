@@ -29,7 +29,7 @@ export default function DataRead() {
         <>
             <Title title={`${services[path+"Term"][serviceId].title} 저장 데이터 조회`} />
             <div className={layout.sub_content}>
-                {loading ? <></> : <DataView path={path} data={data} serviceId={serviceId} />}
+                {loading ? <></> : <DataView path={path} data={data} serviceId={serviceId} isViaData={true} />}
             </div>
             <div className={layout.sub_button}>
                 {loading ? <></> :
