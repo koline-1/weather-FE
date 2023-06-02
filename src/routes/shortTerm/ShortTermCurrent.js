@@ -1,6 +1,10 @@
-const { useEffect, useState } = require('react');
-const { useParams } = require('react-router-dom');
-const ButtonLink = require('../../components/ButtonLink').default;
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import ButtonLink from '../../components/ButtonLink';
+import services from '../../services.json';
+import layout from '../../styles/layout/Layout.module.css';
+import Title from '../../components/Title';
+import DataView from '../../components/DataView';
 
 
 export default function ShortTermCurrent() {
@@ -73,33 +77,23 @@ export default function ShortTermCurrent() {
     
     return (
         <>
-            {loading ? <></> : serviceId === "status" ?
-                <ul>
-                    {keySet.map((key) => {
-                        if (key === "id" || key === "date") {
-                            return <></>;
-                        }
-                        return <li key={`${key}`}>{key+ ": "+ data[key]}</li>
-                    })}
-                </ul>
-                :
-                <div>
-                    {data.map((each, index) => {
-                        return <div key={index}>
-                            <ul key={index}>
-                                {keySet.map((key) => {
-                                    if (key === "id" || key === "date") {
-                                        return <></>;
-                                    }
-                                    return <li key={`${index}_${key}`}>{key+ ": "+ each[key]}</li>
-                                })}
-                            </ul>
-                        </div>
-                    })}
-                </div>
-            }
-            <ButtonLink to={`/short/service/${nxValue}/${nyValue}`} text="뒤로" />
-            <button onClick={saveData}>저장</button>
+            <Title title={services.shortTerm[serviceId].title} />
+            <div className={layout.sub_content}>
+                {loading ? <></> : serviceId === "status" ?
+                    <DataView path='short' serviceId={serviceId} data={data} isViaData={false} />
+                    :
+                    <div>
+                        {data.map((each, index) => {
+                            return <DataView key={index} path='short' serviceId={serviceId} data={each} isViaData={false} />
+                        })}
+                    </div>
+                }
+            </div>
+            <div className={layout.sub_button}>
+                <ButtonLink to={`/short/${serviceId}/location/`} text="뒤로" />
+                <button onClick={saveData}>저장</button>
+                <ButtonLink to={`/data/short/${serviceId}/location/${nxValue}/${nyValue}?page=1`} text="저장데이터 조회" />
+            </div>
         </>
     );
     
