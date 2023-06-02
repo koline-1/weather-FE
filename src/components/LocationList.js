@@ -8,12 +8,13 @@ import styles from '../styles/common/Common.module.css';
 export default function LocationList({ path, serviceId, isViaData }) {
 
     const [groups, setGroups] = useState();
-    let group = [];
+
     useEffect(() => {
         const mock = path === 'mid' ? Object.keys(services.midTerm[serviceId].locations) : shortTermLocations;
         const length = mock.length;
         const denom = Math.floor(length/5);
         const div = length%5;
+        let group = [];
 
         let tmpGroup = new Array(div === 0 ? denom:denom+1);
         
@@ -33,7 +34,7 @@ export default function LocationList({ path, serviceId, isViaData }) {
             }
         })
         setGroups(tmpGroup);
-    }, []);
+    }, [path, serviceId]);
 
     return (
         <>

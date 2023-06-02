@@ -11,7 +11,6 @@ import styles from '../../styles/main/Main.module.css';
 import apiInfo from '../../apiInfo.json';
 import shortTermLocations from '../../shortTermLocations.json';
 
-// @TODO: 초단기 실황 > 초단기 예보로 서비스 변경
 export default function MainView () {
 
     useEffect(() => {
@@ -45,7 +44,7 @@ export default function MainView () {
         const firstHour = date.getHours()+1+'00';
 
         [].forEach.call(allData, (each) => {
-            if (each.fcstTime == firstHour) {
+            if (each.fcstTime === firstHour) {
                 currentData.push(each);
             }
         })
@@ -96,6 +95,12 @@ export default function MainView () {
                     <>
                         <img src={cloudy} alt="cloudy"/>
                         <p>흐림</p>
+                    </>
+                )
+                default: return (
+                    <>
+                        <img src={sunny} alt="sunny"/>
+                        <p>맑음</p>
                     </>
                 )
             }

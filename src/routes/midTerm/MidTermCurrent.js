@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ButtonLink from "../../components/ButtonLink";
 import services from '../../services.json';
-import Region from '../../components/Region';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from "../../components/Title";
 import DataView from "../../components/DataView";
 
 export default function MidTermCurrent () {
     const [data, setData] = useState();
-    const [keySet, setKeySet] = useState([]);
     const [loading, setLoading] = useState(true);
     const { serviceId, locationCode } = useParams();
 
@@ -17,7 +15,6 @@ export default function MidTermCurrent () {
         const getData = async() => {
             const response = await(await fetch(`http://localhost:8080/mid-term/${serviceId}/current/${locationCode}`)).json();
             setData(response);
-            setKeySet(Object.keys(response));
             setLoading(false);
         }
         getData();

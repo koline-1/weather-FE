@@ -11,18 +11,12 @@ export default function ShortTermCurrent() {
 
     const { serviceId, nxValue, nyValue } = useParams();
     const [data, setData] = useState();
-    const [keySet, setKeySet] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const getData = async() => {
             const response = await (await fetch(`http://localhost:8080/short-term/${serviceId}/current/${nxValue}/${nyValue}`)).json();
             setData(response);
-            if (serviceId === "status") {
-                setKeySet(Object.keys(response))
-            } else {
-                setKeySet(Object.keys(response[0]));
-            }
             setLoading(false);
         }
         getData()
