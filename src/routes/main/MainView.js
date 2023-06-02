@@ -4,6 +4,8 @@ import disconnected from '../../images/main/disconnected.png';
 import sunny from '../../images/main/sunny.png';
 import snowy from '../../images/main/snowy.png';
 import rainy from '../../images/main/rainy.png';
+import cloudy from '../../images/main/cloudy.png';
+import windy from '../../images/main/windy.png';
 import squareMainTab from '../../images/squareMainTab.png';
 import styles from '../../styles/main/Main.module.css';
 import apiInfo from '../../apiInfo.json';
@@ -24,7 +26,7 @@ export default function MainView () {
         const date = new Date();
         const min = date.getMinutes();
 
-        if (min < 40) {
+        if (min < 45) {
             date.setHours(date.getHours() - 1);
         }
 
@@ -37,48 +39,110 @@ export default function MainView () {
 
         const url = `${apiInfo.url}&nx=${nx}&ny=${ny}&base_date=${baseDate}&base_time=${baseTime}`;
         const json = await(await fetch(url)).json();
-        setData(json);
+
+        const allData = json.response.body.items.item;
+        const currentData = [];
+        const firstHour = date.getHours()+1+'00';
+
+        [].forEach.call(allData, (each) => {
+            if (each.fcstTime == firstHour) {
+                currentData.push(each);
+            }
+        })
+
+        setData(currentData);
         setLoading(false);
     }
 
     const getValue = (target) => {
-        const items = data.response.body.items.item;
         let result;
-        [].forEach.call(items, (item) => {
+        [].forEach.call(data, (item) => {
             if (item.category === target) {
-                result = item.obsrValue;
+                console.log(item)
+                result = item.fcstValue;
                 return false;
             }
         })
         return result;
     }
     
-    const realTimeStatus = () => {switch(getValue('PTY')){
-        case "0": return (
-            <>
-                <img src={sunny} alt="sunny"/>
-                <p>맑음</p>
-            </>
-        )
-        case "3": case "7": return (
-            <>
-                <img src={snowy} alt="snowy"/>
-                <p>눈</p>
-            </>
-        )
-        case "1": case "2": case "5": case "6": return (
-            <>
-                <img src={rainy} alt="rainy"/>
-                <p>비</p>
-            </>
-        )
-        default: return (
-            <>
-                <img src={disconnected} alt="disconnected"/>
-                <p>날씨정보를 찾을 수 없습니다.</p>
-            </>
-        )
-    }};
+    const realTimeStatus = () => {
+        const horizontalWind = getValue('UUU');
+        const verticalWind = getValue('VVV');
+        switch(getValue('PTY')){
+            case "0": switch(getValue('SKY')) {
+                case "1":  return (
+                    <>
+                        {(horizontalWind > 7 && horizontalWind < 900) || (verticalWind > 7 && verticalWind < 900) ? (
+                            <>
+                                <img src={windy} alt="windy"/>
+                                <p>바람</p>
+                            </>
+                        ) : (
+                            <>
+                                <img src={sunny} alt="sunny"/>
+                                <p>맑음</p>
+                            </>
+                        )}
+                    </>
+                )
+                case "3": return (
+                    <>
+                        <img src={cloudy} alt="cloudy"/>
+                        <p>구름많음</p>
+                    </>
+                )
+                case "4": return (
+                    <>
+                        <img src={cloudy} alt="cloudy"/>
+                        <p>흐림</p>
+                    </>
+                )
+            }
+            case "3": return (
+                <>
+                    <img src={snowy} alt="snowy"/>
+                    <p>눈</p>
+                </>
+            )
+            case "7": return (
+                <>
+                    <img src={snowy} alt="snowy"/>
+                    <p>눈날림</p>
+                </>
+            )
+            case "1": return (
+                <>
+                    <img src={rainy} alt="rainy"/>
+                    <p>비</p>
+                </>
+            )
+            case "2": return (
+                <>
+                    <img src={rainy} alt="rainy"/>
+                    <p>비/눈</p>
+                </>
+            )
+            case "5": return (
+                <>
+                    <img src={rainy} alt="rainy"/>
+                    <p>빗방울</p>
+                </>
+            )
+            case "6": return (
+                <>
+                    <img src={rainy} alt="rainy"/>
+                    <p>빗방울눈날림</p>
+                </>
+            )
+            default: return (
+                <>
+                    <img src={disconnected} alt="disconnected"/>
+                    <p>날씨정보를 찾을 수 없습니다.</p>
+                </>
+            )
+        }
+    };
 
     return (
         <>
