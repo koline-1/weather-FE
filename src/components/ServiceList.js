@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import styles from '../styles/common/Common.module.css';
 import services from '../services.json';
 
-export default function ServiceList({ path, viaData }) {
+export default function ServiceList({ path, isViaData }) {
 
     const keys = Object.keys(services[path+"Term"]);
 
@@ -13,7 +13,7 @@ export default function ServiceList({ path, viaData }) {
             {keys.map((key, index) => {
                 return (
                     <div key={index}>
-                        <Link to={(viaData ? '/data' : '')+(`/${path}/${key}`) + (viaData ? '?page=1' : '/location')}>{services[path+"Term"][key].title}</Link>
+                        <Link to={(isViaData ? '/data' : '')+(`/${path}/${key}`) + (isViaData ? '?page=1' : '/location')}>{services[path+"Term"][key].title}</Link>
                     </div>
                 );
             })}
@@ -23,5 +23,5 @@ export default function ServiceList({ path, viaData }) {
 
 ServiceList.propTypes = {
     path: PropTypes.string.isRequired,
-    viaData: PropTypes.bool.isRequired
+    isViaData: PropTypes.bool.isRequired
 }

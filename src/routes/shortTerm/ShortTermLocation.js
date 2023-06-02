@@ -10,7 +10,7 @@ export default function ShortTermLocation() {
         <>
             <Title title={'단기 예보 위치 설정'} />
             <div className={layout.sub_content}>
-                <LocationList path='short' serviceId={serviceId} viaData={false} />
+                <LocationList path='short' serviceId={serviceId} isViaData={false} />
             </div>
             <div className={layout.sub_button}>
                 <ButtonLink to="/short/service" text="뒤로" />

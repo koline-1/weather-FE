@@ -5,7 +5,7 @@ import services from '../services.json';
 import shortTermLocations from '../shortTermLocations.json';
 import styles from '../styles/common/Common.module.css';
 
-export default function LocationList({ path, serviceId, viaData }) {
+export default function LocationList({ path, serviceId, isViaData }) {
 
     const [groups, setGroups] = useState();
     let group = [];
@@ -46,7 +46,7 @@ export default function LocationList({ path, serviceId, viaData }) {
                                     return (
                                         <Link 
                                             key={`${index}_${idx}`} 
-                                            to={((viaData ? '/data' : '') + `/${path}/${serviceId}`) + (viaData ? '/location' : '')
+                                            to={((isViaData ? '/data' : '') + `/${path}/${serviceId}`) + (isViaData ? '/location' : '')
                                                 + (path === 'mid' ? `/${element}` : `/${element.nxValue}/${element.nyValue}`)} 
                                         >
                                             {path === 'mid' ? services.midTerm[serviceId].locations[element] : element.region}
@@ -65,5 +65,5 @@ export default function LocationList({ path, serviceId, viaData }) {
 LocationList.propTypes = {
     path: PropTypes.string.isRequired,
     serviceId: PropTypes.string.isRequired,
-    viaData: PropTypes.bool.isRequired
+    isViaData: PropTypes.bool.isRequired
 }
