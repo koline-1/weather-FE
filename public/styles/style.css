@@ -21,3 +21,7 @@ body {
     background-image: url("../images/weatherMain.png");
     background-size: 100%;
 }
+
+a {
+    text-decoration-line: none;
+}

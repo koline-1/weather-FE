@@ -1,0 +1,12 @@
+.home_container {
+    position: absolute;
+    top: 5%;
+    left: 50px;
+    z-index: 1;
+}
+
+.home_link {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    color: white;
+}

@@ -1,0 +1,24 @@
+.tabs {
+    display: flex;
+    height: 600px;
+}
+
+.tabs_vertical > div {
+    display: flex;
+}
+
+.tabs_vertical a,
+.tabs a {
+    display: block;
+    width: 250px;
+    height: 50px;
+    margin: 20px;
+    border: 1px solid rgba(178, 178, 178, 0.945);
+    border-radius: 10px;
+    background-color: rgba(178, 178, 178, 0.945);
+    position: relative;
+    top: 35%;
+    color: white;
+    text-align: center;
+    line-height: 50px; 
+}
