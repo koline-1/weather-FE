@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
-import styles from '../styles/common/Common.module.css';
-import services from '../services.json';
+const { Link } = require('react-router-dom');
+const { PropTypes } = require('prop-types');
+const ButtonLink = require('./ButtonLink').default;
+const styles = require('../styles/components/ServiceList.module.css').default;
 
-export default function ServiceList({ path, viaData }) {
-
-    const keys = Object.keys(services[path+"Term"]);
+export default function ServiceList({ title, links }) {
 
     return (
-        <div className={styles.tabs}>
-            {keys.map((key, index) => {
-                return (
-                    <div key={index}>
-                        <Link to={(viaData ? '/data' : '')+(`/${path}/${key}`) + (viaData ? '?page=1' : '/location')}>{services[path+"Term"][key].title}</Link>
-                    </div>
-                );
-            })}
+        <div className={styles.white}>
+            <h1>{title}</h1>
+            <div>
+                {links.map((each) => {
+                    return <Link to={each.link}>{each.text}</Link>
+                })}
+            </div>
+            <ButtonLink to='/' text='뒤로' />
         </div>
     )
 }
 
 ServiceList.propTypes = {
-    path: PropTypes.string.isRequired,
-    viaData: PropTypes.bool.isRequired
+    title: PropTypes.string.isRequired,
+    links: PropTypes.arrayOf(
+        PropTypes.shape({
+            link: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        })
+    )
 }
