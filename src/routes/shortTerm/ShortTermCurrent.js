@@ -1,26 +1,17 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ButtonLink from '../../components/ButtonLink';
-import services from '../../services.json';
+import services from '../../json/services.json';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from '../../components/Title';
 import DataView from '../../components/DataView';
+import useRead from '../../hooks/useRead';
 
 
 export default function ShortTermCurrent() {
 
     const { serviceId, nxValue, nyValue } = useParams();
-    const [data, setData] = useState();
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const getData = async() => {
-            const response = await (await fetch(`http://localhost:8080/short-term/${serviceId}/current/${nxValue}/${nyValue}`)).json();
-            setData(response);
-            setLoading(false);
-        }
-        getData()
-    }, [serviceId, nxValue, nyValue])
+    const location = [nxValue, nyValue];
+    const data = useRead('short', serviceId, location);
 
     const saveData = async() => {
         const response = await (await fetch(`http://localhost:8080/short-term/${serviceId}/current`, {
@@ -58,7 +49,7 @@ export default function ShortTermCurrent() {
         <>
             <Title title={services.shortTerm[serviceId].title} />
             <div className={layout.sub_content}>
-                {loading ? <></> : serviceId === "status" ?
+                {!data ? <></> : serviceId === "status" ?
                     <DataView path='short' serviceId={serviceId} data={data} isViaData={false} />
                     :
                     <div>

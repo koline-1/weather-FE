@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import ButtonLink from '../../components/ButtonLink';
 import layout from '../../styles/layout/Layout.module.css';
-import services from '../../services.json';
+import services from '../../json/services.json';
 import Title from '../../components/Title';
 import LocationList from '../../components/LocationList';
 
