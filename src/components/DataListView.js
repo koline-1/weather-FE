@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import services from '../services.json';
-import shortTermLocations from '../shortTermLocations.json';
+import services from '../json/services.json';
+import shortTermLocations from '../json/shortTermLocations.json';
 import styles from '../styles/components/DataListView.module.css';
 
 export default function DataListView ({ path, serviceId, data, byLocation, page }) {

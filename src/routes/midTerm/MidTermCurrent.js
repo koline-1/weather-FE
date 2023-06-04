@@ -1,24 +1,14 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ButtonLink from "../../components/ButtonLink";
-import services from '../../services.json';
+import services from '../../json/services.json';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from "../../components/Title";
 import DataView from "../../components/DataView";
+import useRead from "../../hooks/useRead";
 
 export default function MidTermCurrent () {
-    const [data, setData] = useState();
-    const [loading, setLoading] = useState(true);
     const { serviceId, locationCode } = useParams();
-
-    useEffect(() => {
-        const getData = async() => {
-            const response = await(await fetch(`http://localhost:8080/mid-term/${serviceId}/current/${locationCode}`)).json();
-            setData(response);
-            setLoading(false);
-        }
-        getData();
-    }, [locationCode, serviceId]);
+    const data = useRead('mid', serviceId, locationCode);
 
     const saveData = async() => {
         const response = await (await fetch(`http://localhost:8080/mid-term/${serviceId}/current`, {
@@ -44,9 +34,7 @@ export default function MidTermCurrent () {
         <>
             <Title title={services.midTerm[serviceId].title} />
             <div className={layout.sub_content}>
-                {loading ? <></> : (
-                    <DataView path='mid' serviceId={serviceId} data={data} isViaData={false} />
-                )}
+                <DataView path='mid' serviceId={serviceId} data={data} isViaData={false} />
             </div>
             <div className={layout.sub_button}>
                 <ButtonLink to={"/mid/"+serviceId+"/location"} text="뒤로" />

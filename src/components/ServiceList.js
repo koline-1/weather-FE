@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import styles from '../styles/common/Common.module.css';
-import services from '../services.json';
+import services from '../json/services.json';
 
 export default function ServiceList({ path, isViaData }) {
 

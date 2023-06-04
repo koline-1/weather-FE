@@ -8,8 +8,8 @@ import cloudy from '../../images/main/cloudy.png';
 import windy from '../../images/main/windy.png';
 import squareMainTab from '../../images/squareMainTab.png';
 import styles from '../../styles/main/Main.module.css';
-import shortTermLocations from '../../shortTermLocations.json';
-import useRead from '../../hooks/api/useRead';
+import shortTermLocations from '../../json/shortTermLocations.json';
+import useRead from '../../hooks/useRead';
 
 export default function MainView () {
 
@@ -18,7 +18,7 @@ export default function MainView () {
     }, [])
 
     const [location, setLocation] = useState([60,127])
-    const data = useRead("short", "extra", location);
+    const data = useRead("main", "extra", location);
 
     const getValue = (target) => {
         let result;
