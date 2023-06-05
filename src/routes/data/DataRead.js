@@ -23,11 +23,14 @@ export default function DataRead() {
             </div>
             <div className={layout.sub_button}>
                 {!data ? <></> : (
-                    <ButtonLink 
-                        to={`/data/${path}/${serviceId}` + (byLocation ? `/location` + (path === 'mid' ? (serviceId === 'expectation' ? `/${data.stnId}` : `/${data.regId}`) 
-                            : `/${data.nxValue}/${data.nyValue}`) : ``) + `?page=${page}`} 
-                        text={"뒤로"} 
-                    />
+                    <>
+                        <ButtonLink 
+                            to={`/data/${path}/${serviceId}` + (byLocation ? `/location` + (path === 'mid' ? (serviceId === 'expectation' ? `/${data.stnId}` : `/${data.regId}`) 
+                                : `/${data.nxValue}/${data.nyValue}`) : ``) + `?page=${page}`} 
+                            text={"뒤로"} 
+                        />
+                        <ButtonLink to={`/data/${path}/${serviceId}/${dataId}/update?byLocation=${byLocation}&page=${page}`} text='수정' />
+                    </>
                 )}
             </div>
         </>
