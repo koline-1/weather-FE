@@ -5,12 +5,12 @@ import services from '../../json/services.json';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from "../../components/Title";
 import DataView from "../../components/DataView";
-import useRead from "../../hooks/useRead";
+import useGet from "../../hooks/useGet";
 import useCreate from "../../hooks/useCreate";
 
 export default function MidTermCurrent() {
     const { serviceId, locationCode } = useParams();
-    const data = useRead('mid', serviceId, locationCode);
+    const data = useGet('mid', serviceId, locationCode);
     const { mutate, alertResult } = useCreate('mid', serviceId, data);
 
     useEffect(() => {

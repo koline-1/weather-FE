@@ -9,7 +9,7 @@ import windy from '../../images/main/windy.png';
 import squareMainTab from '../../images/squareMainTab.png';
 import styles from '../../styles/main/Main.module.css';
 import shortTermLocations from '../../json/shortTermLocations.json';
-import useRead from '../../hooks/useRead';
+import useGet from '../../hooks/useGet';
 
 export default function MainView () {
 
@@ -18,7 +18,7 @@ export default function MainView () {
     }, [])
 
     const [location, setLocation] = useState([60,127])
-    const data = useRead("main", "extra", location);
+    const data = useGet("main", "extra", location);
 
     const getValue = (target) => {
         let result;
@@ -65,8 +65,8 @@ export default function MainView () {
                 )
                 default: return (
                     <>
-                        <img src={sunny} alt="sunny"/>
-                        <p>맑음</p>
+                        <img src={disconnected} alt="disconnected"/>
+                        <p>날씨정보를 찾을 수 없습니다.</p>
                     </>
                 )
             }
@@ -143,13 +143,17 @@ export default function MainView () {
                         })}
                     </select>
                 </h4>
-                {data === undefined ? <>
-                    <img src={disconnected} alt="disconnected"/>
-                    <p>날씨정보를 찾을 수 없습니다.</p>
-                </> : <>
-                    {getRealTimeStatus()}
-                    <p>{getValue('T1H')}℃</p>
-                </>}
+                {data === undefined ? (
+                    <>
+                        <img src={disconnected} alt="disconnected"/>
+                        <p>날씨정보를 찾을 수 없습니다.</p>
+                    </>
+                ) : (
+                    <>
+                        {getRealTimeStatus()}
+                        <p>{getValue('T1H')}℃</p>
+                    </>
+                )}
             </div>
 
             <div className={styles.container_main}>

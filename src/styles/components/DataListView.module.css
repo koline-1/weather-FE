@@ -10,12 +10,12 @@
   .table th,
   .table td {
     padding: 8px;
+    font-weight: 100;
     border: 1px solid #ddd;
   }
   
   .table th {
     background-color: #bbbbbb;
-    font-weight: bold;
   }
   
   .table td {
