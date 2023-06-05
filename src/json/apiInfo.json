@@ -1,0 +1,19 @@
+{
+    "key": "MURd%2Fv%2F0Sx9wcaIQJYwwnVC%2FQngp6H1j40ewDO6IBk8LO6E2XQsFkzPkrxFcVchzfHDrdXzXxVyamCeQphkq0Q%3D%3D",
+    "address": "https://apis.data.go.kr/1360000",
+    "parameters": "pageNo=1&numOfRows=1000&dataType=JSON",
+    "mid": {
+        "service": "MidFcstInfoService",
+        "expectation": "getMidFcst",
+        "land": "getMidLandFcst",
+        "ocean": "getMidSeaFcst",
+        "temperature": "getMidTa"
+    },
+    "short" : {
+        "service": "VilageFcstInfoService_2.0",
+        "expectation": "getVilageFcst",
+        "extra": "getUltraSrtFcst",
+        "status": "getUltraSrtNcst",
+        "version": "getFcstVersion"
+    }
+}

@@ -8,56 +8,22 @@ import cloudy from '../../images/main/cloudy.png';
 import windy from '../../images/main/windy.png';
 import squareMainTab from '../../images/squareMainTab.png';
 import styles from '../../styles/main/Main.module.css';
-import apiInfo from '../../apiInfo.json';
-import shortTermLocations from '../../shortTermLocations.json';
+import shortTermLocations from '../../json/shortTermLocations.json';
+import useRead from '../../hooks/useRead';
 
 export default function MainView () {
 
     useEffect(() => {
         document.title='기상청 중·단기 예보 조회 서비스';
-        getData(60, 127);
     }, [])
 
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState();
-
-    const getData = async(nx, ny) => {
-        const date = new Date();
-        const min = date.getMinutes();
-
-        if (min < 45) {
-            date.setHours(date.getHours() - 1);
-        }
-
-        const month = date.getMonth()+1;
-        const day = date.getDate();
-        const hour = date.getHours();
-
-        const baseDate = `${date.getFullYear()}${month < 10 ? '0'+month : month}${day < 10 ? '0'+day : day}`;
-        const baseTime = `${hour < 10 ? '0'+hour : hour}${min < 10 ? '0'+min : min}`;
-
-        const url = `${apiInfo.url}&nx=${nx}&ny=${ny}&base_date=${baseDate}&base_time=${baseTime}`;
-        const json = await(await fetch(url)).json();
-
-        const allData = json.response.body.items.item;
-        const currentData = [];
-        const firstHour = date.getHours()+1+'00';
-
-        [].forEach.call(allData, (each) => {
-            if (each.fcstTime === firstHour) {
-                currentData.push(each);
-            }
-        })
-
-        setData(currentData);
-        setLoading(false);
-    }
+    const [location, setLocation] = useState([60,127])
+    const data = useRead("main", "extra", location);
 
     const getValue = (target) => {
         let result;
         [].forEach.call(data, (item) => {
             if (item.category === target) {
-                console.log(item)
                 result = item.fcstValue;
                 return false;
             }
@@ -65,7 +31,7 @@ export default function MainView () {
         return result;
     }
     
-    const realTimeStatus = () => {
+    const getRealTimeStatus = () => {
         const horizontalWind = getValue('UUU');
         const verticalWind = getValue('VVV');
         switch(getValue('PTY')){
@@ -157,7 +123,10 @@ export default function MainView () {
                     <select
                         onChange={(e) => {
                             const target = e.target.selectedOptions[0];
-                            getData(target.getAttribute("nxvalue"), target.getAttribute("nyvalue"));
+                            const arr = new Array(2);
+                            arr[0] = target.getAttribute("nxvalue");
+                            arr[1] = target.getAttribute("nyvalue");
+                            setLocation(arr);
                         }}
                         className={styles.select_box}
                     >
@@ -174,11 +143,11 @@ export default function MainView () {
                         })}
                     </select>
                 </h4>
-                {loading ? <>
+                {data === undefined ? <>
                     <img src={disconnected} alt="disconnected"/>
                     <p>날씨정보를 찾을 수 없습니다.</p>
                 </> : <>
-                    {realTimeStatus()}
+                    {getRealTimeStatus()}
                     <p>{getValue('T1H')}℃</p>
                 </>}
             </div>
