@@ -10,11 +10,6 @@
         "nyValue": "120"
     },
     {
-        "region": "수원",
-        "nxValue": "61",
-        "nyValue": "120"
-    },
-    {
         "region": "부산",
         "nxValue": "55",
         "nyValue": "127"
@@ -48,5 +43,15 @@
         "region": "제주",
         "nxValue": "52",
         "nyValue": "38"
+    },
+    {
+        "region": "제주",
+        "nxValue": "52",
+        "nyValue": "38"
+    },
+    {
+        "region": "수원",
+        "nxValue": "61",
+        "nyValue": "120"
     }
 ]

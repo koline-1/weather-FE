@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import services from '../json/services.json';
-import shortTermLocations from '../json/shortTermLocations.json';
+import services from '../services.json';
+import shortTermLocations from '../shortTermLocations.json';
 import styles from '../styles/common/Common.module.css';
 
 export default function LocationList({ path, serviceId, isViaData }) {
