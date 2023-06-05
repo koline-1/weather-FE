@@ -4,14 +4,14 @@ import services from '../../json/services.json';
 import layout from '../../styles/layout/Layout.module.css';
 import Title from '../../components/Title';
 import DataView from '../../components/DataView';
-import useRead from '../../hooks/useRead';
+import useGet from '../../hooks/useGet';
 
 
 export default function ShortTermCurrent() {
 
     const { serviceId, nxValue, nyValue } = useParams();
     const location = [nxValue, nyValue];
-    const data = useRead('short', serviceId, location);
+    const data = useGet('short', serviceId, location);
 
     const saveData = async() => {
         const response = await (await fetch(`http://localhost:8080/short-term/${serviceId}/current`, {

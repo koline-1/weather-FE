@@ -1,38 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useQuery } from 'react-query';
-import GetMid from '../api/GetMid';
-import GetShortExpectation from '../api/GetShortExpectation';
-import GetShortExtra from '../api/GetShortExtra';
-import GetShortStatus from '../api/GetShortStatus';
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
-export default function useRead (path, serviceId, location) {
-    
-    const [result, setResult] = useState("");
+export default function useRead(path, serviceId, dataId) {
 
-    const queryKey = [path, serviceId, location];
+    const [result, setResult] = useState();
 
-    const getService = () => {
-        if (path === 'mid') {
-            return GetMid(queryKey)
-        } else {
-            if (serviceId === 'expectation') {
-                return GetShortExpectation(queryKey);
-            } else if (serviceId === 'extra') {
-                return GetShortExtra(queryKey);
-            } else {
-                return GetShortStatus(queryKey);
-            }
-        }
+    const getData = async() => {
+        return await (await fetch(`http://localhost:8080/${path}-term/${serviceId}/${dataId}`)).json();
     }
 
-    const { data, isLoading } = useQuery(queryKey, getService);
+    const { data, isLoading } = useQuery([path, serviceId, dataId], getData);
 
     useEffect(() => {
         if (!isLoading && data !== result) {
-            setResult(data);
+            return setResult(data);
         }
-    }, [data, isLoading, result])
+    }, [isLoading, data, result])
 
     return result;
 }
-
