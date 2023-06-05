@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import ButtonLink from "../../components/ButtonLink";
 import DataView from '../../components/DataView';
 import layout from '../../styles/layout/Layout.module.css';
-import services from '../../json/services.json';
+import services from '../../services.json';
 import Title from "../../components/Title";
 
 

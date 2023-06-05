@@ -5,7 +5,7 @@ import DataListView from '../../components/DataListView';
 import Pagination from "../../components/Pagination";
 import layout from '../../styles/layout/Layout.module.css';
 import Title from "../../components/Title";
-import services from '../../json/services.json';
+import services from '../../services.json';
 import styles from '../../styles/data/DataList.module.css';
 
 export default function DataListByLocation() {
