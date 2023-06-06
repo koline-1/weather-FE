@@ -20,6 +20,8 @@ export default function MainView () {
     const [location, setLocation] = useState([60,127])
     const data = useGet("main", "extra", location);
 
+    console.log(data);
+
     const getValue = (target) => {
         let result;
         [].forEach.call(data, (item) => {
