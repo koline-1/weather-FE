@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import disconnected from '../../images/main/disconnected.png';
-import sunny from '../../images/main/sunny.png';
-import snowy from '../../images/main/snowy.png';
-import rainy from '../../images/main/rainy.png';
-import cloudy from '../../images/main/cloudy.png';
-import windy from '../../images/main/windy.png';
 import squareMainTab from '../../images/squareMainTab.png';
 import styles from '../../styles/main/Main.module.css';
 import shortTermLocations from '../../json/shortTermLocations.json';
 import useGet from '../../hooks/useGet';
+import RealTimeStatus from '../../components/RealTimeStatus';
+import disconnected from '../../images/main/disconnected.png';
 
 export default function MainView () {
 
@@ -19,8 +15,6 @@ export default function MainView () {
 
     const [location, setLocation] = useState([60,127])
     const data = useGet("main", "extra", location);
-
-    console.log(data);
 
     const getValue = (target) => {
         let result;
@@ -32,90 +26,6 @@ export default function MainView () {
         })
         return result;
     }
-    
-    const getRealTimeStatus = () => {
-        const horizontalWind = getValue('UUU');
-        const verticalWind = getValue('VVV');
-        switch(getValue('PTY')){
-            case "0": switch(getValue('SKY')) {
-                case "1":  return (
-                    <>
-                        {(horizontalWind > 7 && horizontalWind < 900) || (verticalWind > 7 && verticalWind < 900) ? (
-                            <>
-                                <img src={windy} alt="windy"/>
-                                <p>바람</p>
-                            </>
-                        ) : (
-                            <>
-                                <img src={sunny} alt="sunny"/>
-                                <p>맑음</p>
-                            </>
-                        )}
-                    </>
-                )
-                case "3": return (
-                    <>
-                        <img src={cloudy} alt="cloudy"/>
-                        <p>구름많음</p>
-                    </>
-                )
-                case "4": return (
-                    <>
-                        <img src={cloudy} alt="cloudy"/>
-                        <p>흐림</p>
-                    </>
-                )
-                default: return (
-                    <>
-                        <img src={disconnected} alt="disconnected"/>
-                        <p>날씨정보를 찾을 수 없습니다.</p>
-                    </>
-                )
-            }
-            case "3": return (
-                <>
-                    <img src={snowy} alt="snowy"/>
-                    <p>눈</p>
-                </>
-            )
-            case "7": return (
-                <>
-                    <img src={snowy} alt="snowy"/>
-                    <p>눈날림</p>
-                </>
-            )
-            case "1": return (
-                <>
-                    <img src={rainy} alt="rainy"/>
-                    <p>비</p>
-                </>
-            )
-            case "2": return (
-                <>
-                    <img src={rainy} alt="rainy"/>
-                    <p>비/눈</p>
-                </>
-            )
-            case "5": return (
-                <>
-                    <img src={rainy} alt="rainy"/>
-                    <p>빗방울</p>
-                </>
-            )
-            case "6": return (
-                <>
-                    <img src={rainy} alt="rainy"/>
-                    <p>빗방울눈날림</p>
-                </>
-            )
-            default: return (
-                <>
-                    <img src={disconnected} alt="disconnected"/>
-                    <p>날씨정보를 찾을 수 없습니다.</p>
-                </>
-            )
-        }
-    };
 
     return (
         <>
@@ -152,7 +62,7 @@ export default function MainView () {
                     </>
                 ) : (
                     <>
-                        {getRealTimeStatus()}
+                        <RealTimeStatus horizontalWind={getValue('UUU')} verticalWind={getValue('VVV')} rainType={getValue('PTY')} skyStatus={getValue('SKY')} />
                         <p>{getValue('T1H')}℃</p>
                     </>
                 )}

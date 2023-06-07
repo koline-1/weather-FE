@@ -28,13 +28,10 @@ const GetShortExtra = async( queryKey ) => {
     const rawData = json.response.body.items.item;
     const processedData = [];
     const firstHour = ((date.getHours()+1) < 10 ? '0'+(date.getHours()+1) : (date.getHours()+1))+'00';
-    console.log('first = ', firstHour)
 
     if (path === 'main') {
         [].forEach.call(rawData, (each) => {
-            console.log('each1 = ',each);
             if (each.fcstTime === firstHour) {
-                console.log('each2 = ',each);
                 processedData.push(each);
             }
         })

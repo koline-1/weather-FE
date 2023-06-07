@@ -16,7 +16,8 @@
             },
             "data": {
                 "id": "id",
-                "date": "등록일",
+                "created": "등록일",
+                "updated": "수정일",
                 "stnId": "지점번호",
                 "wfSv": "기상전망"
             }
@@ -37,7 +38,8 @@
             },
             "data" : {
                 "id": "id",
-                "date": "등록일",
+                "created": "등록일",
+                "updated": "수정일",
                 "regId": "예보구역코드",
                 "rnSt3Am": "3일 후 오전 강수 확률",
                 "rnSt3Pm": "3일 후 오후 강수 확률",
@@ -86,7 +88,8 @@
             },
             "data" : {
                 "id": "id",
-                "date": "등록일",
+                "created": "등록일",
+                "updated": "수정일",
                 "regId": "예보구역코드",
                 "wf3Am": "3일후 오전날씨예보",
                 "wf3Pm": "3일후 오후날씨예보",
@@ -160,7 +163,8 @@
             },
             "data" : {
                 "id": "id",
-                "date": "등록일",
+                "created": "등록일",
+                "updated": "수정일",
                 "regId": "예보구역코드",
                 "taMin3": "3일 후 예상최저기온(℃)",
                 "taMin3Low": "3일 후 예상최저기온 하한 범위",
@@ -218,7 +222,8 @@
             "title": "단기 예보 조회",
             "data": {
                 "id": "id",
-                "date": "등록일",
+                "created": "등록일",
+                "updated": "수정일",
                 "baseDate": "발표일자",
                 "baseTime": "발표시각",
                 "forecastDate": "예보일자",
@@ -246,7 +251,8 @@
             "title": "초단기 예보",
             "data": {
                 "id": "id",
-                "date": "등록일",
+                "created": "등록일",
+                "updated": "수정일",
                 "baseDate": "발표일자",
                 "baseTime": "발표시각",
                 "forecastDate": "예보일자",
@@ -270,7 +276,8 @@
             "title": "초단기 실황",
             "data": {
                 "id": "id",
-                "date": "등록일",
+                "created": "등록일",
+                "updated": "수정일",
                 "baseDate": "발표일자",
                 "baseTime": "발표시각",
                 "nxValue": "예보지점 X좌표",

@@ -41,7 +41,7 @@ export default function DataView ({ path, serviceId, data, isViaData }) {
                             }
                             return (
                                 <React.Fragment key={index}>
-                                    {key === 'nyValue' || (!isViaData && (key === "id" || key === "date")) ? <></> : (
+                                    {key === 'nyValue' || (!isViaData && (key === "id" || key === "created" || key === "updated")) ? <></> : (
                                         <tr>
                                             <th>{datalist[key]}</th>
                                             <td>{data[key]}</td>
@@ -63,3 +63,5 @@ DataView.propTypes = {
     path: PropTypes.string.isRequired,
     isViaData: PropTypes.bool.isRequired
 }
+
+
