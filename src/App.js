@@ -12,6 +12,7 @@ import DataService from './routes/data/DataService';
 import DataLocation from './routes/data/DataLocation';
 import DataList from './routes/data/DataList';
 import DataRead from './routes/data/DataRead';
+import DataUpdate from './routes/data/DataUpdate';
 import DataListByLocationMid from './routes/data/DataListByLocationMid';
 import DataListByLocationShort from './routes/data/DataListByLocationShort';
 
@@ -45,6 +46,7 @@ function App() {
           <Route path='/data/:path' element={<DataService />} />
           <Route path='/data/:path/:serviceId/' element={<DataList />} />
           <Route path='/data/:path/:serviceId/:dataId' element={<DataRead />} />
+          <Route path='/data/:path/:serviceId/:dataId/update' element={<DataUpdate />} />
           <Route path='/data/:path/:serviceId/location' element={<DataLocation />} />
           <Route path='/data/:path/:serviceId/location/:locationCode' element={<DataListByLocationMid />} />
           <Route path='/data/:path/:serviceId/location/:nxValue/:nyValue' element={<DataListByLocationShort />} />
