@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import services from '../services.json';
-import shortTermLocations from '../shortTermLocations.json';
+import services from '../json/services.json';
+import shortTermLocations from '../json/shortTermLocations.json';
 import styles from '../styles/common/Common.module.css';
 
 export default function LocationList({ path, serviceId, isViaData }) {
@@ -10,8 +10,8 @@ export default function LocationList({ path, serviceId, isViaData }) {
     const [groups, setGroups] = useState();
 
     useEffect(() => {
-        const mock = path === 'mid' ? Object.keys(services.midTerm[serviceId].locations) : shortTermLocations;
-        const length = mock.length;
+        const locations = path === 'mid' ? Object.keys(services.midTerm[serviceId].locations) : shortTermLocations;
+        const length = locations.length;
         const denom = Math.floor(length/5);
         const div = length%5;
         let group = [];
@@ -26,9 +26,9 @@ export default function LocationList({ path, serviceId, isViaData }) {
             }
         }
 
-        [].forEach.call(mock, (each, index) => {
+        [].forEach.call(locations, (each, index) => {
             group.push(each);
-            if (index%5===4 || index === mock.length-1) {
+            if (index%5===4 || index === locations.length-1) {
                 tmpGroup[Math.ceil((index+1)/5)-1] = group;
                 group = []
             }
@@ -38,7 +38,7 @@ export default function LocationList({ path, serviceId, isViaData }) {
 
     return (
         <>
-            {groups === undefined ? <></> : (
+            {!groups ? <></> : (
                 <div className={styles.tabs_vertical}>
                     {groups.map((each, index) => {
                         return (

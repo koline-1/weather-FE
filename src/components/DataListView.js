@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import services from '../services.json';
-import shortTermLocations from '../shortTermLocations.json';
+import services from '../json/services.json';
+import shortTermLocations from '../json/shortTermLocations.json';
 import styles from '../styles/components/DataListView.module.css';
 
 export default function DataListView ({ path, serviceId, data, byLocation, page }) {
@@ -53,7 +53,7 @@ export default function DataListView ({ path, serviceId, data, byLocation, page 
                                     </>) : (<>
                                         <td><Link to={`/data/short/${serviceId}/${each.id}?byLocation=${byLocation}&page=${page}`}>{getShortTermRegion(each)}</Link></td>
                                     </>)}
-                                    <td>{each.date}</td>
+                                    <td>{each.created}</td>
                                 </tr>
                             )
                         })}
@@ -68,7 +68,8 @@ DataListView.propTypes = {
     data: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.number.isRequired,
-            date: PropTypes.string.isRequired,
+            created: PropTypes.string.isRequired,
+            updated: PropTypes.string,
             baseDate:  PropTypes.string,
             baseTime:  PropTypes.string,
             forecastDate:  PropTypes.string,
