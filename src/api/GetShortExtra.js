@@ -28,6 +28,7 @@ const GetShortExtra = async( queryKey ) => {
     const rawData = json.response.body.items.item;
     const processedData = [];
     const firstHour = ((date.getHours()+1) < 10 ? '0'+(date.getHours()+1) : (date.getHours()+1))+'00';
+    const firstHour = ((date.getHours()+1) < 10 ? '0'+(date.getHours()+1) : (date.getHours()+1))+'00';
 
     if (path === 'main') {
         [].forEach.call(rawData, (each) => {
