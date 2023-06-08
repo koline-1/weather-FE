@@ -35,11 +35,11 @@ export default function DataList() {
                 {loading ? <></> : (
                     <div>
                         <h4 className={styles.count}>총 <strong>{count}</strong>개의 저장된 데이터가 있습니다.</h4>
-                        <DataListView path={path} serviceId={serviceId} data={data} byLocation={false} page={page} />
+                        <DataListView path={path} serviceId={serviceId} data={data} byLocation={false} page={page} count={count} />
                     </div>
                 )}
             </div>
-            <Pagination page={page} path={path} serviceId={serviceId} totalCount={count} byLocation={false} />
+            <Pagination page={page} path={path} serviceId={serviceId} totalCount={count} byLocation={false} count={count} />
             <div className={layout.sub_button}>
                 <ButtonLink to={`/data/${path}`} text={"뒤로"} />
                 <ButtonLink to={`/data/${path}/${serviceId}/location`} text={"지역별 조회"} />

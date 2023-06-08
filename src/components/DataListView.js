@@ -4,7 +4,7 @@ import services from '../json/services.json';
 import shortTermLocations from '../json/shortTermLocations.json';
 import styles from '../styles/components/DataListView.module.css';
 
-export default function DataListView ({ path, serviceId, data, byLocation, page }) {
+export default function DataListView ({ path, serviceId, data, byLocation, page, count }) {
     const getMidTermRegion = (row) => {
         let key;
         if (serviceId === "expectation") {
@@ -25,7 +25,7 @@ export default function DataListView ({ path, serviceId, data, byLocation, page 
         })
         return region;
     }
-
+console.log('count = ',count)
     return (
         <>
             {data === null || data.length === 0 ? <h1>데이터가 없습니다.</h1> : (
@@ -33,7 +33,7 @@ export default function DataListView ({ path, serviceId, data, byLocation, page 
                     <thead>
                         <tr>
                             <th>
-                                ID
+                                번호
                             </th>
                             <th>
                                 {path === 'mid' ? '지역' : '예보지점'}
@@ -47,7 +47,7 @@ export default function DataListView ({ path, serviceId, data, byLocation, page 
                         {data.map((each, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{each.id}</td>
+                                    <td>{count - (((page - 1) * 15) + index)}</td>
                                     {path === "mid" ? (<>
                                         <td><Link to={`/data/mid/${serviceId}/${each.id}?byLocation=${byLocation}&page=${page}`}>{getMidTermRegion(each)}</Link></td>
                                     </>) : (<>
