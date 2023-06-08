@@ -1,26 +1,25 @@
 import shortTermLocations from '../json/shortTermLocations.json';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import services from '../json/services.json';
 import styles from '../styles/components/DataUpdateView.module.css'
 import ButtonLink from "../components/ButtonLink";
 import { PropTypes } from 'prop-types';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import useUpdate from '../hooks/useUpdate';
 
 const textarea_key = ["wfSv"];
 
 export default function DataUpdateView ({ path, serviceId, data, dataId }) {
 
     const { register, handleSubmit, formState: { isSubmitting } } = useForm();
-    const [location, setLocation] = useState(path === 'mid' ? (serviceId === 'expectation' ? data.stnId : data.regId) : [data.nxValue, data.nyValue]);
-
-    const queryClient = useQueryClient();
-    const navigate = useNavigate();
+    const [location, setLocation] = useState(path === 'mid' ? (serviceId === 'expectation' ? data.stnId : data.regId) : `${data.nxValue}-${data.nyValue}`);
 
     const loc = useLocation();
     const page = new URLSearchParams(loc.search).get("page") ?? "1";
     const byLocation = JSON.parse(new URLSearchParams(loc.search).get("byLocation")) ?? false;
+    
+    const { mutate, handleResult } = useUpdate(path, serviceId, dataId, byLocation, page);
 
     const service = services[path+"Term"];
     const locations = path === 'mid' ? Object.keys(service[serviceId].locations) : shortTermLocations;
@@ -31,16 +30,11 @@ export default function DataUpdateView ({ path, serviceId, data, dataId }) {
         if (path === 'mid') {
             setLocation(e.target.value);
         } else {
-            setLocation(e.target.value.split(','));
+            setLocation(e.target.value.split('-'));
         }
     }
 
-    const invalidateQuery = (queryKey) => {
-        queryClient.invalidateQueries(queryKey);
-    }
-
     const onSuccess = async (values) => {
-
         // select에서 두 개의 value를 register 할 수 없어서 useState사용해 fetch 하기전 값 추가
         if (path === 'mid') {
             if (serviceId === 'expectation') {
@@ -52,26 +46,17 @@ export default function DataUpdateView ({ path, serviceId, data, dataId }) {
             values.nxValue = location[0];
             values.nyValue = location[1];
         }
-        
-        const updatedData = await (await fetch(`http://localhost:8080/${path}-term/${serviceId}/${dataId}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({
-                data : values
-            }),
-        })).json();
 
-        // 수정 완료 시 query cache를 삭제하여 수정 전 데이터 띄우는 현상 방지
-        invalidateQuery([path, serviceId, dataId]);
-
-        navigate(`/data/${path}/${serviceId}/${dataId}?byLocation=${byLocation}&page=${page}`, { state: updatedData })
+        mutate(values);
     }
 
     const onError = (error) => {
         console.log('error: ', error);
     }
+
+    useEffect(() => {
+        handleResult();
+    }, [handleResult])
 
 
     return (
@@ -86,10 +71,7 @@ export default function DataUpdateView ({ path, serviceId, data, dataId }) {
                                         <tr key={index}>
                                             <th>예보지점</th>
                                             <td>
-                                                <select 
-                                                    defaultValue={location}
-                                                    onChange={handleLocationChange}
-                                                >
+                                                <select defaultValue={location} onChange={handleLocationChange}>
                                                     {locations.map((loc, index) => {
                                                         return (
                                                             <React.Fragment key={loc+index}>
@@ -98,7 +80,7 @@ export default function DataUpdateView ({ path, serviceId, data, dataId }) {
                                                                         {service[serviceId].locations[loc]}
                                                                     </option>
                                                                     ) : (
-                                                                    <option value={`${loc.nxValue},${loc.nyValue}`}>
+                                                                    <option value={`${loc.nxValue}-${loc.nyValue}`}>
                                                                         {loc.region}
                                                                     </option>
                                                                 )}
