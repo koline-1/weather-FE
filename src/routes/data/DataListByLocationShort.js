@@ -34,7 +34,7 @@ export default function DataListByLocation() {
             { loading ? <></> : (
                 <div className={layout.sub_content}>
                     <h4 className={styles.count}>총 <strong>{count}</strong>개의 저장된 데이터가 있습니다.</h4>
-                    <DataListView path={path} serviceId={serviceId} data={data} byLocation={true} page={page} />
+                    <DataListView path={path} serviceId={serviceId} data={data} byLocation={true} page={page} count={count} />
                 </div>
             )}
             <Pagination page={page} path={path} serviceId={serviceId} totalCount={count} byLocation={true} nxValue={nxValue} nyValue={nyValue} />
