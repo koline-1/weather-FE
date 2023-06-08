@@ -5,6 +5,8 @@ import layout from '../../styles/layout/Layout.module.css';
 import services from '../../json/services.json';
 import Title from "../../components/Title";
 import useRead from "../../hooks/useRead";
+import useDelete from "../../hooks/useDelete";
+import { useEffect } from "react";
 
 export default function DataRead() {
     const { path, serviceId, dataId } = useParams();
@@ -15,6 +17,12 @@ export default function DataRead() {
     
     const data = useRead(path, serviceId, dataId);
     const updatedData = loc.state;
+
+    const { mutate, handleResult } = useDelete(path, serviceId, data, byLocation, page);
+
+    useEffect(() => {
+        handleResult();
+    }, [handleResult])
 
     return (
         <>
@@ -31,6 +39,7 @@ export default function DataRead() {
                             text={"뒤로"} 
                         />
                         <ButtonLink to={`/data/${path}/${serviceId}/${dataId}/update?byLocation=${byLocation}&page=${page}`} text='수정' />
+                        <button type='button' onClick={mutate}>삭제</button>
                     </>
                 )}
             </div>
