@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import services from '../json/services.json';
 import shortTermLocations from '../json/shortTermLocations.json';
@@ -6,16 +6,18 @@ import styles from '../styles/components/DataListView.module.css';
 import useList from '../hooks/useList';
 
 export default function DataListView ({ path, serviceId, byLocation, page, count, locationCode, nxValue, nyValue }) {
+console.log(path, serviceId, page, locationCode, nxValue, nyValue)
+    const { data, isLoading, refetch } = useList(path, serviceId, page, locationCode, nxValue, nyValue);
+    
+    const loc = useLocation();
+    const isUpdated = JSON.parse(new URLSearchParams(loc.search).get("isUpdated")) ?? false;
 
-    const { data, isLoading } = useList(path, serviceId, page, locationCode, nxValue, nyValue)
+    if (isUpdated) {
+        refetch();
+    }
 
     const getMidTermRegion = (row) => {
-        let key;
-        if (serviceId === "expectation") {
-            key = row.stnId;
-        } else {
-            key = row.regId;
-        }
+        const key = serviceId === "expectation" ? row.stnId : row.regId;
         return services.midTerm[serviceId].locations[key];
     }
 
@@ -32,7 +34,7 @@ export default function DataListView ({ path, serviceId, byLocation, page, count
 
     return (
         <>
-            {isLoading ? <h1>데이터가 없습니다.</h1> : (
+            {isLoading ? <></> : data?.length === 0 ? <h1>데이터가 없습니다.</h1> : (
                 <div>
                     <h4 className={styles.count}>총 <strong>{count}</strong>개의 저장된 데이터가 있습니다.</h4>
                     <table className={styles.table}>
@@ -89,5 +91,8 @@ DataListView.propTypes = {
     serviceId: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
     byLocation: PropTypes.bool.isRequired,
-    page: PropTypes.string
+    page: PropTypes.string,
+    locationCode: PropTypes.string,
+    nxValue: PropTypes.string,
+    nyValue: PropTypes.string
 }

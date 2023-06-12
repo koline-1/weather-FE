@@ -12,9 +12,13 @@ export default function DataList() {
     
     const loc = useLocation();
     const page = new URLSearchParams(loc.search).get("page") ?? "1";
+    const isUpdated = JSON.parse(new URLSearchParams(loc.search).get("isUpdated")) ?? false;
 
-    const { count, isLoading } = useCount(path, serviceId, page);
-    
+    const { count, isLoading, refetch } = useCount(path, serviceId, page);
+
+    if (isUpdated) {
+        refetch();
+    }
 
     return (
         <>

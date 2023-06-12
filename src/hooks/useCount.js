@@ -10,10 +10,9 @@ export default function useCount(path, serviceId, page, locationCode, nxValue, n
         return res.count;
     }
 
-    const keys = [path, serviceId, page, locationCode, nxValue, nyValue];
+    const keys = [path, serviceId, page, locationCode, nxValue, nyValue, "count"];
     const queryKey = keys.filter((item) => item);
-    queryKey.push("count");
-    const { data: count, isLoading } = useQuery(queryKey, getCount);
+    const { data: count, isLoading, refetch } = useQuery(queryKey, getCount);
 
-    return { count, isLoading }
+    return { count, isLoading, refetch }
 }

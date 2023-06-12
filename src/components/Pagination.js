@@ -3,7 +3,7 @@ import styles from '../styles/components/Pagination.module.css';
 import { PropTypes } from 'prop-types';
 
 export default function Pagination({ totalCount, page, path, serviceId, byLocation, locationCode, nxValue, nyValue }) {
-console.log('count = ', totalCount);
+
     const pages = [];
 
     const totalPage = Math.floor(totalCount/15)+(totalCount%15 !== 0 ? 1:0);
