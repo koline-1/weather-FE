@@ -10,7 +10,7 @@ import useCreate from "../../hooks/useCreate";
 
 export default function MidTermCurrent() {
     const { serviceId, locationCode } = useParams();
-    const data = useGet('mid', serviceId, locationCode);
+    const { data, isLoading } = useGet('mid', serviceId, locationCode);
     const { mutate, alertResult } = useCreate('mid', serviceId, data);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function MidTermCurrent() {
         <>
             <Title title={services.midTerm[serviceId].title} />
             <div className={layout.sub_content}>
-                <DataView path='mid' serviceId={serviceId} data={data} isViaData={false} />
+                {isLoading || !data ? <></> : <DataView path='mid' serviceId={serviceId} data={data} isViaData={false} />}
             </div>
             <div className={layout.sub_button}>
                 <ButtonLink to={"/mid/"+serviceId+"/location"} text="뒤로" />

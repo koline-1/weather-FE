@@ -13,7 +13,7 @@ export default function ShortTermCurrent() {
 
     const { serviceId, nxValue, nyValue } = useParams();
     const location = [nxValue, nyValue];
-    const data = useGet('short', serviceId, location);
+    const { data, isLoading } = useGet('short', serviceId, location);
     const { mutate, alertResult } = useCreate('short', serviceId, data);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function ShortTermCurrent() {
         <>
             <Title title={services.shortTerm[serviceId].title} />
             <div className={layout.sub_content}>
-                {!data ? <></> : serviceId === "status" ?
+                {isLoading || !data ? <></> : serviceId === "status" ?
                     <DataView path='short' serviceId={serviceId} data={data} isViaData={false} />
                     :
                     <div>

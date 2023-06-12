@@ -21,7 +21,7 @@ export default function DataListByLocation() {
             { isLoading ? <></> : (
                 <>
                     <div className={layout.sub_content}>
-                        <DataListView path={path} serviceId={serviceId} byLocation={true} page={page} count={count} />
+                        <DataListView path={path} serviceId={serviceId} byLocation={true} page={page} count={count} nxValue={nxValue} nyValue={nyValue} />
                     </div>
                     <Pagination page={page} path={path} serviceId={serviceId} totalCount={count} byLocation={true} nxValue={nxValue} nyValue={nyValue} />
                 </>
