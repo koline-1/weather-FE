@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 export default function useDelete (path, serviceId, data, byLocation, page) {
 
     const [result, setResult] = useState();
-    // const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const { mutate } = useMutation(async() => {
@@ -24,8 +23,9 @@ export default function useDelete (path, serviceId, data, byLocation, page) {
 
         const handleSuccess = () => {
             alert('성공적으로 삭제되었습니다.');
+
             navigate(`/data/${path}/${serviceId}` + (byLocation ? `/location` + (path === 'mid' ? (serviceId === 'expectation' ? `/${data.stnId}` : `/${data.regId}`) 
-            : `/${data.nxValue}/${data.nyValue}`) : ``) + `?page=${page}`);
+            : `/${data.nxValue}/${data.nyValue}`) : ``) + `?page=${page}&isUpdated=true`);
         }
 
         const handleFailure = () => {
@@ -33,7 +33,7 @@ export default function useDelete (path, serviceId, data, byLocation, page) {
         }
 
         if (result) {
-            typeof result.result === 'string' ? handleSuccess() : handleFailure()
+            result.result === 'Data not found.' ? handleFailure() : handleSuccess()
         }
     }
 

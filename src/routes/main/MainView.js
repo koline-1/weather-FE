@@ -14,7 +14,7 @@ export default function MainView () {
     }, [])
 
     const [location, setLocation] = useState([60,127])
-    const data = useGet("main", "extra", location);
+    const { data, isLoading } = useGet("main", "extra", location);
 
     const getValue = (target) => {
         let result;
@@ -55,7 +55,7 @@ export default function MainView () {
                         })}
                     </select>
                 </h4>
-                {data === undefined ? (
+                {!data || isLoading ? (
                     <>
                         <img src={disconnected} alt="disconnected"/>
                         <p>날씨정보를 찾을 수 없습니다.</p>
