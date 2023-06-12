@@ -15,7 +15,7 @@ export default function DataRead() {
     const page = new URLSearchParams(loc.search).get("page") ?? "1";
     const byLocation = JSON.parse(new URLSearchParams(loc.search).get("byLocation")) ?? false;
     
-    const data = useRead(path, serviceId, dataId);
+    const { data, isLoading } = useRead(path, serviceId, dataId);
     const updatedData = loc.state;
 
     const { mutate, handleResult } = useDelete(path, serviceId, data, byLocation, page);
@@ -28,7 +28,7 @@ export default function DataRead() {
         <>
             <Title title={`${services[path+"Term"][serviceId].title} 저장 데이터 조회`} />
             <div className={layout.sub_content}>
-                {!data ? <></> : <DataView path={path} data={updatedData ?? data} serviceId={serviceId} isViaData={true} />}
+                {!data || isLoading ? <></> : <DataView path={path} data={updatedData ?? data} serviceId={serviceId} isViaData={true} />}
             </div>
             <div className={layout.sub_button}>
                 {!data ? <></> : (
