@@ -1,23 +1,36 @@
 .table {
-    position: absolute;
-    left: 25%;
-    top: 20%;
-    width: 50%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-  
-  .table th,
-  .table td {
-    padding: 8px;
-    font-weight: 100;
-    border: 1px solid #ddd;
-  }
-  
-  .table th {
-    background-color: #bbbbbb;
-  }
-  
-  .table td {
-    text-align: center;
-  }
+  position: absolute;
+  left: 25%;
+  top: 20%;
+  width: 50%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  font-weight: 100;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #bbbbbb;
+}
+
+.table td {
+  text-align: center;
+}
+
+.count {
+  position: absolute;
+  top: 130px;
+  left: 26%;
+  font-family: 'photo2';
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.count > strong {
+    font-weight: 500;
+}
